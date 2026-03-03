@@ -1,0 +1,89 @@
+---
+const navLinks = [
+  { label: 'Funcionalidades', href: '/#features' },
+  { label: 'Precios', href: '/pricing' },
+  { label: 'Contacto', href: '/#contact' },
+];
+
+const appUrl = import.meta.env.PUBLIC_APP_URL || 'https://app.smartdentalcloud.com';
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <i class="fa-solid fa-tooth"></i>
+      <span>SmartDental Cloud</span>
+    </a>
+    <nav class="nav-links">
+      {navLinks.map(link => (
+        <a href={link.href}>{link.label}</a>
+      ))}
+    </nav>
+    <div class="header-actions">
+      <a href={`${appUrl}/login`} class="btn btn-outline btn-sm">Iniciar Sesión</a>
+      <a href={`${appUrl}/register`} class="btn btn-primary btn-sm">Prueba Gratis</a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .logo i {
+    color: var(--primary);
+    font-size: 24px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: var(--primary);
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 12px;
+  }
+
+  .btn-sm {
+    padding: 8px 18px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+  }
+</style>

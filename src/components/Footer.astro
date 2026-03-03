@@ -1,0 +1,115 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <i class="fa-solid fa-tooth"></i>
+        <span>SmartDental Cloud</span>
+      </div>
+      <p>Software dental en la nube para consultorios modernos.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Producto</h4>
+        <a href="/#features">Funcionalidades</a>
+        <a href="/pricing">Precios</a>
+        <a href="/#faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <a href="/#contact">Contacto</a>
+        <a href="/privacy">Privacidad</a>
+        <a href="/terms">Términos</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; {year} SmartDental Cloud. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--text);
+    color: #cbd5e1;
+    padding-top: 64px;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 48px;
+    padding-bottom: 48px;
+  }
+
+  .footer-brand {
+    max-width: 320px;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 12px;
+  }
+
+  .footer-logo i {
+    color: var(--accent);
+  }
+
+  .footer-brand p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 64px;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-col h4 {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .footer-col a {
+    color: #94a3b8;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover {
+    color: white;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid #334155;
+    padding: 20px 0;
+  }
+
+  .footer-bottom p {
+    font-size: 13px;
+    color: #64748b;
+  }
+
+  @media (max-width: 768px) {
+    .footer-inner { flex-direction: column; gap: 32px; }
+    .footer-links { gap: 32px; }
+  }
+</style>

@@ -1,0 +1,338 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const appUrl = import.meta.env.PUBLIC_APP_URL || 'https://app.smartdentalcloud.com';
+const apiUrl = import.meta.env.PUBLIC_API_URL || 'https://api.smartdentalcloud.com';
+
+// Fetch plans from API at build time (SSG) or request time (SSR)
+let plans: any[] = [];
+try {
+  const res = await fetch(`${apiUrl}/api/plans`);
+  if (res.ok) {
+    plans = await res.json();
+  }
+} catch (e) {
+  // Fallback plans if API is unavailable
+  plans = [
+    {
+      id: 'basic', name: 'Básico', description: 'Para consultorios pequeños',
+      monthlyPrice: 499, yearlyPrice: 4990, patientLimit: 100, userLimit: 3,
+      features: ['Citas y Calendario', 'Gestión de Pacientes', 'Facturación básica', 'Soporte por email'],
+      isRecommended: false
+    },
+    {
+      id: 'pro', name: 'Profesional', description: 'Para consultorios en crecimiento',
+      monthlyPrice: 999, yearlyPrice: 9990, patientLimit: 500, userLimit: 10,
+      features: ['Todo en Básico', 'Reportes avanzados', 'Inventario', 'CFDI / Timbrado', 'Soporte prioritario'],
+      isRecommended: true
+    },
+    {
+      id: 'enterprise', name: 'Empresarial', description: 'Para clínicas y corporativos',
+      monthlyPrice: 1999, yearlyPrice: 19990, patientLimit: null, userLimit: null,
+      features: ['Todo en Profesional', 'Pacientes ilimitados', 'Usuarios ilimitados', 'Dominio personalizado', 'Soporte dedicado'],
+      isRecommended: false
+    }
+  ];
+}
+
+function formatCurrency(value: number): string {
+  return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', minimumFractionDigits: 0 }).format(value);
+}
+
+function formatLimit(limit: number | null | undefined): string {
+  if (!limit || limit < 0) return 'Ilimitados';
+  return limit.toString();
+}
+---
+
+<Layout title="Precios" description="Planes flexibles para consultorios de cualquier tamaño. Todos incluyen 14 días de prueba gratuita.">
+  <Header />
+
+  <section class="pricing-hero">
+    <div class="container">
+      <span class="section-tag">Precios</span>
+      <h1>Planes para cada consultorio</h1>
+      <p>Todos los planes incluyen 14 días de prueba gratuita sin tarjeta de crédito.</p>
+    </div>
+  </section>
+
+  <section class="pricing-section">
+    <div class="container">
+      <div class="pricing-grid">
+        {plans.map((plan) => (
+          <div class:list={['pricing-card', { recommended: plan.isRecommended }]}>
+            {plan.isRecommended && <div class="recommended-badge">Más Popular</div>}
+            <h3>{plan.name}</h3>
+            {plan.description && <p class="plan-desc">{plan.description}</p>}
+            <div class="price-block">
+              <span class="price-amount">{formatCurrency(plan.monthlyPrice)}</span>
+              <span class="price-period">/mes</span>
+            </div>
+            {plan.yearlyPrice && (
+              <p class="yearly-price">
+                o {formatCurrency(plan.yearlyPrice)}/año <span class="save-badge">Ahorra 2 meses</span>
+              </p>
+            )}
+            <a href={`${appUrl}/register?plan=${plan.id}`} class:list={['btn', 'btn-block', plan.isRecommended ? 'btn-primary' : 'btn-outline']}>
+              Comenzar Prueba Gratis
+            </a>
+            <ul class="plan-features">
+              <li class="limit-item">
+                <i class="fa-solid fa-users"></i>
+                <span>{formatLimit(plan.patientLimit)} pacientes</span>
+              </li>
+              <li class="limit-item">
+                <i class="fa-solid fa-user-doctor"></i>
+                <span>{formatLimit(plan.userLimit)} usuarios</span>
+              </li>
+              <li class="divider"></li>
+              {plan.features.map((feature: string) => (
+                <li><i class="fa-solid fa-check"></i> {feature}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">FAQ</span>
+        <h2>Preguntas Frecuentes</h2>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h4>¿Necesito tarjeta de crédito para la prueba?</h4>
+          <p>No. La prueba de 14 días es completamente gratis y no requiere tarjeta de crédito.</p>
+        </div>
+        <div class="faq-item">
+          <h4>¿Puedo cambiar de plan después?</h4>
+          <p>Sí, puedes subir o bajar de plan en cualquier momento desde tu panel de configuración.</p>
+        </div>
+        <div class="faq-item">
+          <h4>¿Qué pasa al terminar la prueba?</h4>
+          <p>Si no activas un plan, tu cuenta se pausa pero tus datos se mantienen seguros por 90 días.</p>
+        </div>
+        <div class="faq-item">
+          <h4>¿Mis datos están seguros?</h4>
+          <p>Sí. Usamos encriptación de grado bancario y nuestros servidores están en centros de datos certificados en México.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .pricing-hero {
+    text-align: center;
+    padding: 64px 0 40px;
+    background: var(--surface-alt);
+  }
+
+  .pricing-hero h1 {
+    font-size: 40px;
+    font-weight: 800;
+    margin: 12px 0;
+  }
+
+  .pricing-hero p {
+    font-size: 17px;
+    color: var(--text-secondary);
+  }
+
+  .section-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .pricing-section {
+    padding: 60px 0 100px;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .pricing-card {
+    position: relative;
+    padding: 36px 28px;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pricing-card.recommended {
+    border-color: var(--primary);
+    box-shadow: 0 8px 30px rgba(37, 99, 235, 0.12);
+    transform: scale(1.03);
+  }
+
+  .recommended-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 18px;
+    background: var(--primary);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .pricing-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .plan-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+
+  .price-block {
+    margin-bottom: 4px;
+  }
+
+  .price-amount {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--primary);
+  }
+
+  .price-period {
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+
+  .yearly-price {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  .save-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: #ecfdf5;
+    color: var(--success);
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 4px;
+  }
+
+  .btn-block {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .plan-features {
+    list-style: none;
+    flex: 1;
+  }
+
+  .plan-features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .plan-features li i {
+    color: var(--success);
+    font-size: 13px;
+    width: 16px;
+    text-align: center;
+  }
+
+  .limit-item {
+    font-weight: 600;
+    color: var(--text) !important;
+  }
+
+  .limit-item i {
+    color: var(--primary) !important;
+  }
+
+  .divider {
+    border-top: 1px solid var(--border);
+    margin: 8px 0;
+    padding: 0 !important;
+  }
+
+  /* FAQ */
+  .faq {
+    padding: 80px 0;
+    background: var(--surface-alt);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .section-header h2 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-top: 12px;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .faq-item h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .faq-item p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .pricing-hero h1 { font-size: 30px; }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+    .pricing-card.recommended { transform: none; }
+    .faq-grid { grid-template-columns: 1fr; }
+  }
+</style>

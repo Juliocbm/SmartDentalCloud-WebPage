@@ -1,0 +1,245 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const appUrl = import.meta.env.PUBLIC_APP_URL || 'https://app.smartdentalcloud.com';
+
+const features = [
+  { icon: 'fa-users', title: 'Gestión de Pacientes', desc: 'Expedientes digitales completos con historial clínico, odontograma y documentos.' },
+  { icon: 'fa-calendar-days', title: 'Citas y Calendario', desc: 'Agenda inteligente con recordatorios automáticos por email y WhatsApp.' },
+  { icon: 'fa-tooth', title: 'Odontograma Digital', desc: 'Registra tratamientos y hallazgos con un odontograma interactivo profesional.' },
+  { icon: 'fa-file-invoice-dollar', title: 'Facturación y CFDI', desc: 'Genera facturas y timbra CFDIs directamente desde el sistema.' },
+  { icon: 'fa-boxes-stacked', title: 'Inventario', desc: 'Control de materiales con alertas de stock mínimo y trazabilidad.' },
+  { icon: 'fa-chart-line', title: 'Reportes y Analíticas', desc: 'Dashboard con métricas de producción, ingresos y ocupación en tiempo real.' },
+];
+---
+
+<Layout title="Software Dental en la Nube">
+  <Header />
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <span class="hero-badge">
+          <i class="fa-solid fa-sparkles"></i> 14 días gratis — sin tarjeta
+        </span>
+        <h1>El software dental que tu consultorio merece</h1>
+        <p>Gestiona pacientes, citas, facturación e inventario desde cualquier lugar. Todo en la nube, seguro y fácil de usar.</p>
+        <div class="hero-actions">
+          <a href={`${appUrl}/register`} class="btn btn-primary btn-lg">
+            <i class="fa-solid fa-rocket"></i> Comenzar Prueba Gratis
+          </a>
+          <a href="/pricing" class="btn btn-outline btn-lg">Ver Precios</a>
+        </div>
+        <div class="hero-trust">
+          <i class="fa-solid fa-shield-check"></i>
+          <span>Datos encriptados · HIPAA-friendly · Servidores en México</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Funcionalidades</span>
+        <h2>Todo lo que necesitas para tu consultorio</h2>
+        <p>Herramientas profesionales diseñadas para dentistas, por dentistas.</p>
+      </div>
+      <div class="features-grid">
+        {features.map(f => (
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class={`fa-solid ${f.icon}`}></i>
+            </div>
+            <h3>{f.title}</h3>
+            <p>{f.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container cta-inner">
+      <h2>Empieza hoy con 14 días gratis</h2>
+      <p>Sin tarjeta de crédito. Sin compromisos. Cancela cuando quieras.</p>
+      <a href={`${appUrl}/register`} class="btn btn-white btn-lg">
+        <i class="fa-solid fa-rocket"></i> Crear Mi Consultorio
+      </a>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .hero {
+    padding: 80px 0 100px;
+    background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 50%, #ecfdf5 100%);
+  }
+
+  .hero-inner {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .hero-trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .hero-trust i { color: var(--success); }
+
+  /* Features */
+  .features {
+    padding: 100px 0;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .section-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .section-header h2 {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  .section-header p {
+    font-size: 17px;
+    color: var(--text-secondary);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .feature-card {
+    padding: 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: all 0.2s;
+  }
+
+  .feature-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .feature-icon i {
+    font-size: 20px;
+    color: var(--primary);
+  }
+
+  .feature-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .feature-card p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* CTA */
+  .cta {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
+    text-align: center;
+  }
+
+  .cta h2 {
+    font-size: 36px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 12px;
+  }
+
+  .cta p {
+    font-size: 17px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 32px; }
+    .hero-actions { flex-direction: column; align-items: center; }
+    .features-grid { grid-template-columns: 1fr; }
+    .cta h2 { font-size: 28px; }
+  }
+</style>
