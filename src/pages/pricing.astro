@@ -2,6 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+
+import testimonialImg from '../Images/dentista_03.png';
 
 const appUrl = import.meta.env.PUBLIC_APP_URL || 'https://app.smartdentalcloud.com';
 const apiUrl = import.meta.env.PUBLIC_API_URL || 'https://api.smartdentalcloud.com';
@@ -94,6 +97,19 @@ function formatLimit(limit: number | null | undefined): string {
             </ul>
           </div>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust / Mini Testimonial -->
+  <section class="trust-banner">
+    <div class="container trust-inner">
+      <div class="trust-avatar">
+        <Image src={testimonialImg} alt="C.D. Raúl Alejandro Bautista" width={64} quality={85} class="trust-photo" />
+      </div>
+      <div class="trust-text">
+        <p>"SmartDental Cloud transformó la forma en que administro mi consultorio. Lo recomiendo ampliamente."</p>
+        <span><strong>C.D. Raúl Alejandro Bautista M.</strong> · Monterrey, N.L.</span>
       </div>
     </div>
   </section>
@@ -283,6 +299,47 @@ function formatLimit(limit: number | null | undefined): string {
     border-top: 1px solid var(--border);
     margin: 8px 0;
     padding: 0 !important;
+  }
+
+  /* Trust Banner */
+  .trust-banner {
+    padding: 48px 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+
+  .trust-inner {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .trust-avatar {
+    flex-shrink: 0;
+  }
+
+  .trust-photo {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    border: 3px solid var(--primary-light);
+  }
+
+  .trust-text p {
+    font-size: 15px;
+    font-style: italic;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+
+  .trust-text span {
+    font-size: 13px;
+    color: var(--text-secondary);
   }
 
   /* FAQ */

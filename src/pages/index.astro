@@ -2,6 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+
+import heroImg from '../Images/dentista_01.png';
+import clinicImg from '../Images/banner_02.webp';
+import testimonialImg from '../Images/dentista_04.png';
+
 
 const appUrl = import.meta.env.PUBLIC_APP_URL || 'https://app.smartdentalcloud.com';
 
@@ -13,12 +19,60 @@ const features = [
   { icon: 'fa-boxes-stacked', title: 'Inventario', desc: 'Control de materiales con alertas de stock mínimo y trazabilidad.' },
   { icon: 'fa-chart-line', title: 'Reportes y Analíticas', desc: 'Dashboard con métricas de producción, ingresos y ocupación en tiempo real.' },
 ];
+
+const stats = [
+  { value: '500+', label: 'Consultorios activos', icon: 'fa-building' },
+  { value: '50,000+', label: 'Pacientes gestionados', icon: 'fa-user-group' },
+  { value: '99.9%', label: 'Disponibilidad', icon: 'fa-server' },
+  { value: '4.9/5', label: 'Satisfacción', icon: 'fa-star' },
+];
+
+const journeyStages = [
+  {
+    icon: 'fa-magnet',
+    color: '#2563eb',
+    bg: '#dbeafe',
+    title: 'Conecta con más pacientes',
+    desc: 'Llena tu consultorio con pacientes nuevos y recurrentes a toda hora.',
+    items: ['Agendamiento online 24/7', 'Recordatorios automáticos por WhatsApp', 'Confirmaciones de citas', 'Campañas por email'],
+  },
+  {
+    icon: 'fa-heart-pulse',
+    color: '#059669',
+    bg: '#d1fae5',
+    title: 'Brinda una experiencia de primer nivel',
+    desc: 'La atención que diferenciará a tu consultorio del resto.',
+    items: ['Historia clínica digital completa', 'Odontograma y periodontograma', 'Firma electrónica de consentimientos', 'Recetas y evoluciones digitales'],
+  },
+  {
+    icon: 'fa-coins',
+    color: '#d97706',
+    bg: '#fef3c7',
+    title: 'Aumenta tus ingresos',
+    desc: 'Más facilidades para tus pacientes, más ingresos para ti.',
+    items: ['Facturación y timbrado CFDI', 'Control de pagos y abonos', 'Presupuestos de tratamiento', 'Reportes de producción e ingresos'],
+  },
+  {
+    icon: 'fa-gears',
+    color: '#7c3aed',
+    bg: '#ede9fe',
+    title: 'Controla y optimiza la operación',
+    desc: 'Ten control total de todo lo que sucede en tu consultorio.',
+    items: ['Gestión de inventario con alertas', 'Control de caja y gastos', 'Dashboard con KPIs en tiempo real', 'Reportes exportables a Excel'],
+  },
+];
+
+const steps = [
+  { num: '1', icon: 'fa-user-plus', title: 'Crea tu cuenta', desc: 'Regístrate en menos de 2 minutos. Sin tarjeta de crédito.' },
+  { num: '2', icon: 'fa-sliders', title: 'Configura tu consultorio', desc: 'Personaliza horarios, servicios, usuarios y catálogos.' },
+  { num: '3', icon: 'fa-rocket', title: '¡Listo para atender!', desc: 'Comienza a gestionar pacientes, citas y facturación al instante.' },
+];
 ---
 
 <Layout title="Software Dental en la Nube">
   <Header />
 
-  <!-- Hero -->
+  <!-- Hero — Split Layout -->
   <section class="hero">
     <div class="container hero-inner">
       <div class="hero-content">
@@ -38,6 +92,22 @@ const features = [
           <span>Datos encriptados · HIPAA-friendly · Servidores en México</span>
         </div>
       </div>
+      <div class="hero-image">
+        <Image src={heroImg} alt="Dentista usando SmartDental Cloud en tablet" width={520} quality={85} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <section class="stats-bar">
+    <div class="container stats-inner">
+      {stats.map(s => (
+        <div class="stat-item">
+          <i class={`fa-solid ${s.icon}`}></i>
+          <span class="stat-value">{s.value}</span>
+          <span class="stat-label">{s.label}</span>
+        </div>
+      ))}
     </div>
   </section>
 
@@ -63,7 +133,113 @@ const features = [
     </div>
   </section>
 
-  <!-- CTA -->
+  <!-- How It Works -->
+  <section class="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">¿Cómo funciona?</span>
+        <h2>Empieza en 3 simples pasos</h2>
+        <p>Configurar tu consultorio en SmartDental Cloud es rápido y sencillo.</p>
+      </div>
+      <div class="steps-grid">
+        {steps.map(s => (
+          <div class="step-card">
+            <div class="step-number">{s.num}</div>
+            <div class="step-icon">
+              <i class={`fa-solid ${s.icon}`}></i>
+            </div>
+            <h3>{s.title}</h3>
+            <p>{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Journey Benefits -->
+  <section class="journey" id="solutions">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Soluciones</span>
+        <h2>El software para cada etapa de tu consultorio</h2>
+        <p>Herramientas pensadas para atraer pacientes, brindar experiencias memorables y hacer crecer tu negocio.</p>
+      </div>
+      <div class="journey-grid">
+        {journeyStages.map(stage => (
+          <div class="journey-card">
+            <div class="journey-icon" style={`background: ${stage.bg}; color: ${stage.color};`}>
+              <i class={`fa-solid ${stage.icon}`}></i>
+            </div>
+            <h3>{stage.title}</h3>
+            <p class="journey-desc">{stage.desc}</p>
+            <ul class="journey-items">
+              {stage.items.map(item => (
+                <li><i class="fa-solid fa-check" style={`color: ${stage.color};`}></i> {item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Demo -->
+  <section class="video-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Demo</span>
+        <h2>Mira SmartDental Cloud en acción</h2>
+        <p>Descubre cómo simplificar la gestión de tu consultorio en minutos.</p>
+      </div>
+      <div class="video-wrapper">
+        <video controls preload="metadata" playsinline>
+          <source src="/video-generado.mp4" type="video/mp4" />
+          Tu navegador no soporta video HTML5.
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- Consultorio Moderno — Full-width visual -->
+  <section class="clinic-showcase">
+    <Image src={clinicImg} alt="Consultorio dental moderno" class="clinic-bg" width={1400} quality={80} />
+    <div class="clinic-overlay">
+      <div class="container clinic-content">
+        <h2>Moderniza tu consultorio con tecnología de punta</h2>
+        <p>Únete a los consultorios que ya dejaron el papel atrás y gestionan todo desde la nube.</p>
+        <a href={`${appUrl}/register`} class="btn btn-white btn-lg">
+          <i class="fa-solid fa-rocket"></i> Comenzar Ahora
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section class="testimonial">
+    <div class="container testimonial-inner">
+      <div class="testimonial-content">
+        <div class="testimonial-stars">
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+        </div>
+        <blockquote>
+          "Desde que implementamos SmartDental Cloud, la administración de mi consultorio se simplificó enormemente. Ahora puedo enfocarme en lo que realmente importa: mis pacientes."
+        </blockquote>
+        <div class="testimonial-author">
+          <strong>C.D. Raúl Alejandro Bautista M.</strong>
+          <span>Cirujano Dentista · Monterrey, N.L.</span>
+        </div>
+      </div>
+      <div class="testimonial-image">
+        <Image src={testimonialImg} alt="C.D. Raúl Alejandro Bautista" width={420} quality={85} />
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Final -->
   <section class="cta">
     <div class="container cta-inner">
       <h2>Empieza hoy con 14 días gratis</h2>
@@ -78,16 +254,22 @@ const features = [
 </Layout>
 
 <style>
-  /* Hero */
+  /* ===== Hero — Split Layout ===== */
   .hero {
-    padding: 80px 0 100px;
+    padding: 60px 0 80px;
     background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 50%, #ecfdf5 100%);
+    overflow: hidden;
   }
 
   .hero-inner {
-    text-align: center;
-    max-width: 720px;
-    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .hero-content {
+    text-align: left;
   }
 
   .hero-badge {
@@ -105,9 +287,9 @@ const features = [
   }
 
   .hero h1 {
-    font-size: 48px;
+    font-size: 46px;
     font-weight: 800;
-    line-height: 1.15;
+    line-height: 1.12;
     margin-bottom: 20px;
     color: var(--text);
   }
@@ -122,14 +304,12 @@ const features = [
   .hero-actions {
     display: flex;
     gap: 16px;
-    justify-content: center;
     margin-bottom: 24px;
   }
 
   .hero-trust {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 8px;
     font-size: 13px;
     color: var(--text-muted);
@@ -137,7 +317,59 @@ const features = [
 
   .hero-trust i { color: var(--success); }
 
-  /* Features */
+  .hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .hero-image img {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.1));
+  }
+
+  /* ===== Stats Bar ===== */
+  .stats-bar {
+    padding: 48px 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stats-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    text-align: center;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .stat-item i {
+    font-size: 22px;
+    color: var(--primary);
+    margin-bottom: 4px;
+  }
+
+  .stat-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.1;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  /* ===== Features ===== */
   .features {
     padding: 100px 0;
   }
@@ -216,7 +448,269 @@ const features = [
     line-height: 1.6;
   }
 
-  /* CTA */
+  /* ===== How It Works ===== */
+  .how-it-works {
+    padding: 80px 0 100px;
+    background: var(--surface-alt);
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .step-card {
+    text-align: center;
+    padding: 32px 24px;
+    position: relative;
+  }
+
+  .step-number {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 56px;
+    font-weight: 900;
+    color: var(--primary-light);
+    line-height: 1;
+    z-index: 0;
+  }
+
+  .step-icon {
+    position: relative;
+    z-index: 1;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+
+  .step-icon i {
+    font-size: 24px;
+    color: white;
+  }
+
+  .step-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .step-card p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ===== Journey Benefits ===== */
+  .journey {
+    padding: 100px 0;
+    background: var(--surface);
+  }
+
+  .journey-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .journey-card {
+    padding: 36px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: all 0.2s;
+  }
+
+  .journey-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+
+  .journey-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .journey-icon i {
+    font-size: 22px;
+  }
+
+  .journey-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .journey-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .journey-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .journey-items li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .journey-items li i {
+    font-size: 13px;
+    width: 16px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  /* ===== Video Demo ===== */
+  .video-section {
+    padding: 80px 0 100px;
+    background: var(--surface-alt);
+  }
+
+  .video-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+
+  .video-wrapper video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  /* ===== Clinic Showcase ===== */
+  .clinic-showcase {
+    position: relative;
+    min-height: 400px;
+    overflow: hidden;
+  }
+
+  .clinic-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .clinic-overlay {
+    position: relative;
+    z-index: 1;
+    background: rgba(15, 23, 42, 0.7);
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+  }
+
+  .clinic-content {
+    text-align: center;
+    padding: 80px 0;
+  }
+
+  .clinic-content h2 {
+    font-size: 36px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 16px;
+  }
+
+  .clinic-content p {
+    font-size: 18px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 32px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ===== Testimonial ===== */
+  .testimonial {
+    padding: 100px 0;
+    background: var(--surface);
+  }
+
+  .testimonial-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 64px;
+  }
+
+  .testimonial-stars {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+  }
+
+  .testimonial-stars i {
+    color: #f59e0b;
+    font-size: 20px;
+  }
+
+  .testimonial-content blockquote {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .testimonial-author strong {
+    display: block;
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .testimonial-author span {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .testimonial-image {
+    display: flex;
+    justify-content: center;
+  }
+
+  .testimonial-image img {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.08));
+  }
+
+  /* ===== CTA ===== */
   .cta {
     padding: 80px 0;
     background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
@@ -236,10 +730,38 @@ const features = [
     margin-bottom: 32px;
   }
 
+  /* ===== Responsive ===== */
   @media (max-width: 768px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .hero-content { text-align: center; }
+    .hero-actions { justify-content: center; flex-wrap: wrap; }
+    .hero-trust { justify-content: center; }
+    .hero-image { order: -1; }
+    .hero-image img { max-width: 280px; }
     .hero h1 { font-size: 32px; }
-    .hero-actions { flex-direction: column; align-items: center; }
+
+    .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .stat-value { font-size: 26px; }
+
     .features-grid { grid-template-columns: 1fr; }
+
+    .steps-grid { grid-template-columns: 1fr; max-width: 400px; }
+    .step-number { font-size: 40px; }
+
+    .journey-grid { grid-template-columns: 1fr; }
+
+    .clinic-content h2 { font-size: 26px; }
+
+    .testimonial-inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .testimonial-stars { justify-content: center; }
+    .testimonial-image img { max-width: 280px; }
+
     .cta h2 { font-size: 28px; }
   }
 </style>
