@@ -146,6 +146,16 @@ const faqs = [
 
   <!-- Hero — Split Layout with Dynamic Background -->
   <section class="hero hero-dynamic-bg">
+    <!-- Hero Particles Canvas -->
+    <canvas id="hero-particles-canvas" class="hero-particles-canvas"></canvas>
+    
+    <!-- Hero Orbs -->
+    <div class="hero-orbs">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-orb hero-orb-3"></div>
+    </div>
+    
     <!-- Floating decorative elements -->
     <div class="hero-decorations">
       <div class="float-animation" style="position: absolute; top: 15%; left: 10%; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(6,182,212,0.1)); border-radius: 50%; filter: blur(20px);"></div>
@@ -544,9 +554,11 @@ const faqs = [
     grid-template-columns: 1fr 1fr;
     align-items: center;
     gap: 48px;
+    position: relative;
+    z-index: 2;
   }
 
-  .hero-content { text-align: left; }
+  .hero-content { text-align: left; position: relative; z-index: 2; }
 
   .hero-badge {
     display: inline-flex;
@@ -606,6 +618,8 @@ const faqs = [
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    position: relative;
+    z-index: 2;
   }
 
   .hero-image img {
@@ -1393,6 +1407,71 @@ const faqs = [
 
 <!-- Additional animation styles -->
 <style is:global>
+  /* ========================================
+     HERO SECTION - Particles & Orbs
+     Particles only visible in hero, fade on scroll
+     ======================================== */
+  
+  .hero-particles-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.5s ease;
+  }
+  
+  .hero-orbs {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    animation: heroOrbFloat 15s ease-in-out infinite;
+  }
+  
+  .hero-orb-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
+    top: -200px;
+    left: -200px;
+    animation-delay: 0s;
+  }
+  
+  .hero-orb-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%);
+    top: 30%;
+    right: -150px;
+    animation-delay: -5s;
+  }
+  
+  .hero-orb-3 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+    bottom: 10%;
+    left: 20%;
+    animation-delay: -10s;
+  }
+  
+  @keyframes heroOrbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(30px, -30px) scale(1.05); }
+    50% { transform: translate(0, -50px) scale(1); }
+    75% { transform: translate(-30px, -20px) scale(0.95); }
+  }
+  
   /* CTA Section Effects */
   .cta {
     position: relative;
@@ -1987,6 +2066,198 @@ const faqs = [
       statCards.forEach(card => {
         card.style.transform = 'translateY(0)';
       });
+    });
+  }
+  
+  // ========================================
+  // HERO PARTICLES - Only visible in hero section
+  // Fades out as user scrolls down
+  // ========================================
+  const heroCanvas = document.getElementById('hero-particles-canvas');
+  const heroSection = document.querySelector('.hero');
+  
+  if (heroCanvas && heroSection) {
+    const ctx = heroCanvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: -1000, y: -1000 };
+    let isMouseInHero = false;
+    let heroOpacity = 1;
+    const PARTICLE_COUNT = 120;
+    const MOUSE_RADIUS = 120;
+    
+    function resizeHeroCanvas() {
+      const rect = heroSection.getBoundingClientRect();
+      heroCanvas.width = rect.width;
+      heroCanvas.height = rect.height;
+    }
+    
+    class HeroParticle {
+      constructor() {
+        this.reset();
+      }
+      
+      reset() {
+        this.x = Math.random() * heroCanvas.width;
+        this.y = Math.random() * heroCanvas.height;
+        this.size = Math.random() * 2.5 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.12;
+        this.speedY = (Math.random() - 0.5) * 0.12;
+        this.baseOpacity = Math.random() * 0.5 + 0.2;
+        
+        const colors = [
+          [37, 99, 235],
+          [6, 182, 212],
+          [16, 185, 129]
+        ];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        this.color = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${this.baseOpacity})`;
+      }
+      
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        
+        if (isMouseInHero) {
+          const rect = heroSection.getBoundingClientRect();
+          const heroMouseX = mouse.x - rect.left;
+          const heroMouseY = mouse.y - rect.top;
+          
+          const dx = this.x - heroMouseX;
+          const dy = this.y - heroMouseY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          
+          if (dist < MOUSE_RADIUS) {
+            const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
+            const angle = Math.atan2(dy, dx);
+            this.x += Math.cos(angle) * force * 2;
+            this.y += Math.sin(angle) * force * 2;
+          }
+        }
+        
+        if (this.x < -20) this.x = heroCanvas.width + 20;
+        if (this.x > heroCanvas.width + 20) this.x = -20;
+        if (this.y < -20) this.y = heroCanvas.height + 20;
+        if (this.y > heroCanvas.height + 20) this.y = -20;
+      }
+      
+      draw() {
+        const opacity = this.baseOpacity * heroOpacity;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color.replace(/[\d.]+\)$/, `${opacity})`);
+        ctx.fill();
+        
+        if (this.size > 1.5) {
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = this.color;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      }
+    }
+    
+    function initHeroParticles() {
+      particles = [];
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push(new HeroParticle());
+      }
+    }
+    
+    function drawHeroConnections() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          
+          if (dist < 80) {
+            const opacity = (1 - dist / 80) * 0.15 * heroOpacity;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(37, 99, 235, ${opacity})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+    
+    function drawHeroMouseGlow() {
+      if (isMouseInHero && heroOpacity > 0.1) {
+        const rect = heroSection.getBoundingClientRect();
+        const heroMouseX = mouse.x - rect.left;
+        const heroMouseY = mouse.y - rect.top;
+        
+        const gradient = ctx.createRadialGradient(heroMouseX, heroMouseY, 0, heroMouseX, heroMouseY, MOUSE_RADIUS);
+        gradient.addColorStop(0, `rgba(37, 99, 235, ${0.08 * heroOpacity})`);
+        gradient.addColorStop(1, 'rgba(37, 99, 235, 0)');
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(heroMouseX, heroMouseY, MOUSE_RADIUS, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    
+    function animateHeroParticles() {
+      ctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+      
+      drawHeroMouseGlow();
+      
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      
+      drawHeroConnections();
+      
+      requestAnimationFrame(animateHeroParticles);
+    }
+    
+    // Update opacity based on scroll
+    function updateHeroOpacity() {
+      const rect = heroSection.getBoundingClientRect();
+      const heroHeight = rect.height;
+      const scrolledPast = -rect.top;
+      
+      if (scrolledPast < 0) {
+        heroOpacity = 1;
+      } else if (scrolledPast < heroHeight * 0.5) {
+        heroOpacity = 1 - (scrolledPast / (heroHeight * 0.5));
+      } else {
+        heroOpacity = 0;
+      }
+      
+      heroCanvas.style.opacity = heroOpacity;
+    }
+    
+    resizeHeroCanvas();
+    initHeroParticles();
+    animateHeroParticles();
+    
+    window.addEventListener('resize', () => {
+      resizeHeroCanvas();
+      initHeroParticles();
+    });
+    
+    window.addEventListener('scroll', () => {
+      updateHeroOpacity();
+    });
+    
+    // Mouse tracking - only in hero area
+    heroSection.addEventListener('mouseenter', () => {
+      isMouseInHero = true;
+    });
+    
+    heroSection.addEventListener('mouseleave', () => {
+      isMouseInHero = false;
+      mouse.x = -1000;
+      mouse.y = -1000;
+    });
+    
+    heroSection.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
     });
   }
 </script>

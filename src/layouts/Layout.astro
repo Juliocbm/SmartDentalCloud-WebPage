@@ -125,15 +125,6 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteURL}${ogImage}
   <body>
     <slot />
     <script is:inline src="/register-sw.js"></script>
-    
-    <!-- Animated Background Layers -->
-    <div class="gradient-orbs">
-      <div class="orb orb-1"></div>
-      <div class="orb orb-2"></div>
-      <div class="orb orb-3"></div>
-    </div>
-    <div class="animated-grid"></div>
-    <canvas id="particles-canvas" class="particles-canvas"></canvas>
   </body>
 </html>
 
@@ -215,96 +206,10 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteURL}${ogImage}
   .btn-white:hover { background: var(--primary-light); }
 
   /* ============================================
-     MODERN ANIMATIONS & EFFECTS
+     HERO DYNAMIC BACKGROUND (moved to index.astro)
      ============================================ */
-  
-  /* Particles Canvas - Behind everything */
-  .particles-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -2;
-    opacity: 1;
-  }
-  
-  /* Animated Grid Background */
-  .animated-grid {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -3;
-    background-image: 
-      linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(37, 99, 235, 0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    animation: gridMove 20s linear infinite;
-  }
-  
-  @keyframes gridMove {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(60px, 60px); }
-  }
-  
-  /* Gradient Orbs Background */
-  .gradient-orbs {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -4;
-    overflow: hidden;
-  }
-  
-  .orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(100px);
-    animation: orbFloat 15s ease-in-out infinite;
-  }
-  
-  .orb-1 {
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
-    top: -200px;
-    left: -200px;
-    animation-delay: 0s;
-  }
-  
-  .orb-2 {
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%);
-    top: 30%;
-    right: -150px;
-    animation-delay: -5s;
-  }
-  
-  .orb-3 {
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
-    bottom: 10%;
-    left: 20%;
-    animation-delay: -10s;
-  }
-  
-  @keyframes orbFloat {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    25% { transform: translate(30px, -30px) scale(1.05); }
-    50% { transform: translate(0, -50px) scale(1); }
-    75% { transform: translate(-30px, -20px) scale(0.95); }
-  }
 
-  /* Hero Dynamic Background */
+   /* Hero Dynamic Background */
   .hero-dynamic-bg {
     position: relative;
     overflow: visible;
@@ -502,33 +407,6 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteURL}${ogImage}
     transform: translateY(0);
   }
 
-  /* Floating Particles */
-  .particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: rgba(37, 99, 235, 0.3);
-    border-radius: 50%;
-    animation: particleFloat 15s infinite linear;
-  }
-  
-  @keyframes particleFloat {
-    0% {
-      transform: translateY(100vh) rotate(0deg);
-      opacity: 0;
-    }
-    10% {
-      opacity: 1;
-    }
-    90% {
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(-100vh) rotate(720deg);
-      opacity: 0;
-    }
-  }
-
   /* Shimmer Effect for Buttons */
   .btn-shimmer {
     position: relative;
@@ -579,7 +457,6 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteURL}${ogImage}
 
   @media (prefers-reduced-motion: reduce) {
     [data-animate] { opacity: 1; transform: none; transition: none; }
-    .particles-canvas { display: none; }
     .hero-dynamic-bg::before,
     .hero-dynamic-bg::after { animation: none; }
     .btn-glow { animation: none; }
@@ -632,170 +509,4 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteURL}${ogImage}
       ticking = true;
     }
   });
-
-  // ========================================
-  // MODERN PARTICLES SYSTEM (Linear/Vercel style)
-  // ========================================
-  const canvas = document.getElementById('particles-canvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let mouse = { x: -1000, y: -1000 };
-    let scrollY = 0;
-    let lastScrollY = 0;
-    let scrollVelocity = 0;
-    const PARTICLE_COUNT = 450;
-    const MOUSE_RADIUS = 150;
-    const PARALLAX_STRENGTH = 0.5;
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    class Particle {
-      constructor() {
-        this.reset();
-      }
-
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.baseY = this.y;
-        this.size = Math.random() * 2.5 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 0.15;
-        this.speedY = (Math.random() - 0.5) * 0.15;
-        this.opacity = Math.random() * 0.6 + 0.2;
-        this.parallaxDepth = Math.random() * 0.8 + 0.2;
-        
-        const colors = [
-          [37, 99, 235],
-          [6, 182, 212],
-          [99, 102, 241],
-          [139, 92, 246],
-          [16, 185, 129]
-        ];
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        this.color = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${this.opacity})`;
-      }
-
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        
-        const dx = this.x - mouse.x;
-        const dy = this.y - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        
-        if (dist < MOUSE_RADIUS) {
-          const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
-          const angle = Math.atan2(dy, dx);
-          this.x += Math.cos(angle) * force * 2;
-          this.y += Math.sin(angle) * force * 2;
-        }
-        
-        this.x += scrollVelocity * this.parallaxDepth;
-        
-        if (this.x < -50) this.x = canvas.width + 50;
-        if (this.x > canvas.width + 50) this.x = -50;
-        if (this.y < -50) this.y = canvas.height + 50;
-        if (this.y > canvas.height + 50) this.y = -50;
-      }
-
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-        
-        if (this.size > 1.5) {
-          ctx.shadowBlur = 10;
-          ctx.shadowColor = this.color;
-          ctx.fill();
-          ctx.shadowBlur = 0;
-        }
-      }
-    }
-
-    function initParticles() {
-      particles = [];
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        particles.push(new Particle());
-      }
-    }
-
-    function drawConnections() {
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          
-          if (dist < 100) {
-            const opacity = (1 - dist / 100) * 0.25;
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      }
-    }
-
-    function drawMouseTrail() {
-      if (mouse.x > 0 && mouse.y > 0) {
-        const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, MOUSE_RADIUS);
-        gradient.addColorStop(0, 'rgba(99, 102, 241, 0.1)');
-        gradient.addColorStop(1, 'rgba(99, 102, 241, 0)');
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, MOUSE_RADIUS, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      scrollVelocity *= 0.95;
-      
-      drawMouseTrail();
-      
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
-      
-      drawConnections();
-      
-      requestAnimationFrame(animate);
-    }
-
-    resizeCanvas();
-    initParticles();
-    animate();
-
-    window.addEventListener('resize', () => {
-      resizeCanvas();
-      initParticles();
-    });
-
-    window.addEventListener('scroll', () => {
-      scrollY = window.scrollY;
-      scrollVelocity = (scrollY - lastScrollY) * PARALLAX_STRENGTH;
-      lastScrollY = scrollY;
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    });
-
-    window.addEventListener('mouseleave', () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
-    });
-  }
 </script>
