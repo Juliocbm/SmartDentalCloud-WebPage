@@ -182,16 +182,27 @@ const faqs = [
     </div>
   </section>
 
-  <!-- Stats Bar -->
-  <section class="stats-bar">
-    <div class="container stats-inner">
-      {stats.map((s, i) => (
-        <div class="stat-item" data-animate data-delay={String(i + 1)}>
-          <i class={`fa-solid ${s.icon}`}></i>
-          <span class="stat-value">{s.value}</span>
-          <span class="stat-label">{s.label}</span>
-        </div>
-      ))}
+  <!-- Stats Bar - Modern Interactive -->
+  <section class="stats-bar-modern" id="stats">
+    <div class="stats-bg-gradient"></div>
+    <div class="container">
+      <div class="stats-grid">
+        {stats.map((s, i) => (
+          <div class="stat-card" data-stat-index={String(i)} data-animate>
+            <div class="stat-glow"></div>
+            <div class="stat-icon-wrapper">
+              <div class="stat-icon-ring"></div>
+              <i class={`fa-solid ${s.icon}`}></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-value-wrapper">
+                <span class="stat-number" data-target={s.value.replace(/[^0-9]/g, '')} data-suffix={s.value.replace(/[0-9]/g, '')}>0</span>
+              </div>
+              <span class="stat-label">{s.label}</span>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -1593,4 +1604,389 @@ const faqs = [
   .clinic-initials {
     transition: transform 0.3s ease;
   }
+  
+  /* ========================================
+     MODERN STATS SECTION - Horizontal Showcase
+     ======================================== */
+  
+  .stats-bar-modern {
+    position: relative;
+    padding: 60px 0;
+    overflow: hidden;
+    background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 50%, #ecfdf5 100%);
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .stats-bg-gradient {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 50%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+    animation: statsBgPulse 8s ease-in-out infinite;
+  }
+  
+  @keyframes statsBgPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+  
+  .stats-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  
+  /* Horizontal Layout */
+  .stats-grid {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 24px;
+    z-index: 2;
+  }
+  
+  .stat-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 32px 40px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-8px);
+    z-index: 10;
+    box-shadow: 0 20px 40px rgba(37, 99, 235, 0.12);
+    border-color: #2563eb;
+  }
+  
+  /* Dividers - removed for clean look */
+  
+  /* Glow Effect */
+  .stat-glow {
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+  
+  .stat-card:hover .stat-glow {
+    opacity: 1;
+  }
+  
+  /* Icon Section */
+  .stat-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background: #eff6ff;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+  
+  .stat-card:hover .stat-icon-wrapper {
+    background: #dbeafe;
+    transform: scale(1.1);
+  }
+  
+  .stat-icon-ring {
+    position: absolute;
+    inset: -8px;
+    border: 2px solid rgba(37, 99, 235, 0.2);
+    border-radius: 50%;
+    animation: ringPulse 2.5s ease-in-out infinite;
+  }
+  
+  .stat-card:nth-child(2) .stat-icon-ring { animation-delay: 0.5s; border-color: rgba(6, 182, 212, 0.2); }
+  .stat-card:nth-child(3) .stat-icon-ring { animation-delay: 1s; border-color: rgba(16, 185, 129, 0.2); }
+  .stat-card:nth-child(4) .stat-icon-ring { animation-delay: 1.5s; border-color: rgba(245, 158, 11, 0.2); }
+  
+  @keyframes ringPulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.15); opacity: 0.1; }
+  }
+  
+  .stat-icon-wrapper i {
+    font-size: 24px;
+    color: #2563eb;
+    transition: all 0.3s ease;
+  }
+  
+  .stat-card:nth-child(2) .stat-icon-wrapper i { color: #06b6d4; }
+  .stat-card:nth-child(3) .stat-icon-wrapper i { color: #10b981; }
+  .stat-card:nth-child(4) .stat-icon-wrapper i { color: #f59e0b; }
+  
+  .stat-card:hover .stat-icon-wrapper i {
+    transform: scale(1.1);
+  }
+  
+  /* Content Section */
+  .stat-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    z-index: 1;
+  }
+  
+  .stat-value-wrapper {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+  }
+  
+  .stat-number {
+    font-size: 36px;
+    font-weight: 800;
+    color: #1e293b;
+    line-height: 1;
+    transition: all 0.3s ease;
+  }
+  
+  .stat-card:hover .stat-number {
+    color: #2563eb;
+  }
+  
+  .stat-card:nth-child(2):hover .stat-number { color: #06b6d4; }
+  .stat-card:nth-child(3):hover .stat-number { color: #10b981; }
+  .stat-card:nth-child(4):hover .stat-number { color: #f59e0b; }
+  
+  .stat-label {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+  }
+  
+  .stat-card:hover .stat-label {
+    color: #475569;
+  }
+  
+  /* Responsive Stats */
+  @media (max-width: 1200px) {
+    .stats-grid {
+      flex-wrap: wrap;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .stat-card {
+      flex: 1 1 calc(50% - 12px);
+      max-width: 300px;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .stats-grid {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      max-width: 100%;
+      padding: 0 16px;
+    }
+    
+    .stat-card {
+      flex: 0 1 calc(50% - 8px);
+      padding: 20px 16px;
+    }
+    
+    .stat-number {
+      font-size: 28px;
+    }
+    
+    .stat-icon-wrapper {
+      width: 48px;
+      height: 48px;
+    }
+    
+    .stat-icon-wrapper i {
+      font-size: 20px;
+    }
+    
+    .stat-label {
+      font-size: 11px;
+    }
+  }
 </style>
+
+<script>
+  // Stats Counter Animation with Intersection Observer
+  const statsSection = document.getElementById('stats');
+  
+  if (statsSection) {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const statCards = document.querySelectorAll('.stat-card');
+    let hasAnimated = false;
+    
+    // Create mini particles for each stat
+    statCards.forEach((card, index) => {
+      const particlesContainer = document.createElement('div');
+      particlesContainer.className = 'mini-particles';
+      particlesContainer.style.cssText = `
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100px;
+        height: 100px;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      `;
+      card.appendChild(particlesContainer);
+      
+      // Create floating particles
+      for (let i = 0; i < 6; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+          position: absolute;
+          width: ${Math.random() * 4 + 2}px;
+          height: ${Math.random() * 4 + 2}px;
+          background: rgba(255, 255, 255, ${Math.random() * 0.5 + 0.2});
+          border-radius: 50%;
+          top: 50%;
+          left: 50%;
+          animation: particleFloat${index} ${Math.random() * 3 + 2}s ease-in-out infinite;
+          animation-delay: ${Math.random() * 2}s;
+        `;
+        
+        const keyframes = `
+          @keyframes particleFloat${index} {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { 
+              transform: translate(
+                calc(-50% + ${(Math.random() - 0.5) * 100}px), 
+                calc(-50% + ${(Math.random() - 0.5) * 100}px)
+              ) scale(0);
+              opacity: 0;
+            }
+          }
+        `;
+        
+        const style = document.createElement('style');
+        style.textContent = keyframes;
+        document.head.appendChild(style);
+        
+        particlesContainer.appendChild(particle);
+      }
+    });
+    
+    const animateValue = (element, start, end, duration, suffix) => {
+      const startTimestamp = performance.now();
+      const isDecimal = end % 1 !== 0;
+      
+      const step = (timestamp) => {
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(easeOut * (end - start) + start);
+        
+        if (isDecimal) {
+          element.textContent = current / 10 + suffix;
+        } else {
+          element.textContent = current + suffix;
+        }
+        
+        element.classList.add('counting');
+        setTimeout(() => element.classList.remove('counting'), 100);
+        
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      };
+      
+      requestAnimationFrame(step);
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          hasAnimated = true;
+          
+          statCards.forEach((card, index) => {
+            setTimeout(() => {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, index * 150);
+          });
+          
+          setTimeout(() => {
+            statNumbers.forEach((num) => {
+              const target = parseInt(num.dataset.target);
+              const suffix = num.dataset.suffix || '';
+              animateValue(num, 0, target, 2000, suffix);
+            });
+          }, 300);
+        }
+      });
+    }, { threshold: 0.3 });
+    
+    statCards.forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+      card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+      observer.observe(card);
+    });
+    
+    observer.observe(statsSection);
+    
+    // Parallax effect on scroll
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const rect = statsSection.getBoundingClientRect();
+          const scrollPercent = 1 - (rect.top / window.innerHeight);
+          
+          statCards.forEach((card, index) => {
+            const offset = Math.sin(scrollPercent * Math.PI + index * 0.5) * 10;
+            card.style.transform = `translateY(${offset}px)`;
+          });
+          
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+    
+    // Mouse parallax effect
+    statsSection.addEventListener('mousemove', (e) => {
+      const rect = statsSection.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      
+      statCards.forEach((card, index) => {
+        const factor = (index + 1) * 0.5;
+        card.style.transform = `translate(${x * factor}px, ${y * factor}px)`;
+      });
+    });
+    
+    statsSection.addEventListener('mouseleave', () => {
+      statCards.forEach(card => {
+        card.style.transform = 'translateY(0)';
+      });
+    });
+  }
+</script>
