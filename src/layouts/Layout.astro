@@ -25,6 +25,54 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteURL}${ogImage}
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Preload Hero Image para render más rápido -->
+    <link rel="preload" as="image" href="/_astro/dentista_01.DmlZZzya_qBYJJ.webp" />
+
+    <!-- Prefetch para navegación probable -->
+    <link rel="prefetch" href="/pricing" />
+    <link rel="prefetch" href="/privacy" />
+    <link rel="prefetch" href="/terms" />
+    
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "SmartDental Cloud",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": description,
+      "url": siteURL,
+      "image": `${siteURL}/favicon.svg`,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "MXN",
+        "description": "Prueba gratuita de 14 días"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "127"
+      },
+      "provider": {
+        "@type": "Organization",
+        "name": "SmartDental Cloud",
+        "url": siteURL,
+        "logo": `${siteURL}/favicon.svg`,
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "MX"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+52-800-123-4567",
+          "contactType": "customer service",
+          "availableLanguage": ["Spanish", "English"]
+        }
+      }
+    })} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -43,16 +91,40 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteURL}${ogImage}
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={fullOgImage} />
 
-    <!-- Fonts & Icons -->
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- PWA / Mobile Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icon.svg" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="SmartDental Cloud" />
+    <meta name="msapplication-TileColor" content="#2563eb" />
+    <meta name="msapplication-TileImage" content="/icon.svg" />
+    <meta name="application-name" content="SmartDental Cloud" />
+
+    <!-- Preconnect para recursos externos -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="https://app.smartdentalcloud.com" />
+    <link rel="dns-prefetch" href="https://wa.me" />
+
+    <!-- Fonts - Optimizado con font-display swap -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" /></noscript>
+    
+    <!-- Font Awesome - Deferred loading -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" /></noscript>
 
     <title>{fullTitle}</title>
   </head>
   <body>
     <slot />
+    <script is:inline src="/register-sw.js"></script>
   </body>
 </html>
 

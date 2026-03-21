@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /sw.js
+Disallow: /register-sw.js
+
+Sitemap: https://www.smartdentalcloud.com/sitemap-index.xml
