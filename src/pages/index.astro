@@ -144,22 +144,31 @@ const faqs = [
 >
   <Header />
 
-  <!-- Hero — Split Layout -->
-  <section class="hero">
+  <!-- Hero — Split Layout with Dynamic Background -->
+  <section class="hero hero-dynamic-bg">
+    <!-- Floating decorative elements -->
+    <div class="hero-decorations">
+      <div class="float-animation" style="position: absolute; top: 15%; left: 10%; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(6,182,212,0.1)); border-radius: 50%; filter: blur(20px);"></div>
+      <div class="float-animation-delayed" style="position: absolute; top: 60%; right: 15%; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(6,182,212,0.1)); border-radius: 50%; filter: blur(25px);"></div>
+      <div class="float-animation" style="position: absolute; bottom: 20%; left: 20%; width: 40px; height: 40px; background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(16,185,129,0.1)); border-radius: 50%; filter: blur(15px);"></div>
+    </div>
+    
     <div class="container hero-inner">
       <div class="hero-content">
-        <span class="hero-badge">
+        <span class="hero-badge" data-animate>
           <i class="fa-solid fa-sparkles"></i> 14 días gratis — sin tarjeta de crédito
         </span>
-        <h1>El software dental que tu consultorio merece</h1>
-        <p>Gestiona pacientes, citas y factura CFDIs al SAT desde un solo lugar. Todo en la nube, 100% mexicano y fácil de usar.</p>
-        <div class="hero-actions">
-          <a href={`${appUrl}/register`} class="btn btn-primary btn-lg">
+        <h1 data-animate data-delay="1">
+          <span class="gradient-text-animated">El software dental</span> que tu consultorio merece
+        </h1>
+        <p data-animate data-delay="2">Gestiona pacientes, citas y factura CFDIs al SAT desde un solo lugar. Todo en la nube, 100% mexicano y fácil de usar.</p>
+        <div class="hero-actions" data-animate data-delay="3">
+          <a href={`${appUrl}/register`} class="btn btn-primary btn-lg btn-glow btn-shimmer btn-ripple">
             <i class="fa-solid fa-rocket"></i> Comenzar Prueba Gratis
           </a>
           <a href="/pricing" class="btn btn-outline btn-lg">Ver Precios</a>
         </div>
-        <div class="hero-trust">
+        <div class="hero-trust" data-animate data-delay="4">
           <span class="trust-item"><i class="fa-solid fa-shield-check"></i> Datos encriptados</span>
           <span class="trust-sep">·</span>
           <span class="trust-item"><i class="fa-solid fa-file-invoice-dollar"></i> CFDI 4.0 SAT</span>
@@ -167,7 +176,7 @@ const faqs = [
           <span class="trust-item"><i class="fa-solid fa-server"></i> Servidores en México</span>
         </div>
       </div>
-      <div class="hero-image">
+      <div class="hero-image float-animation" data-parallax="0.1">
         <Image src={heroImg} alt="Dentista usando SmartDental Cloud en tablet" width={520} quality={85} loading="eager" fetchpriority="high" />
       </div>
     </div>
@@ -206,14 +215,14 @@ const faqs = [
   <!-- Features -->
   <section class="features" id="features">
     <div class="container">
-      <div class="section-header" data-animate>
+      <div class="section-header section-reveal" data-animate>
         <span class="section-tag">Funcionalidades</span>
         <h2>Todo lo que necesitas para tu consultorio</h2>
         <p>Herramientas profesionales diseñadas para dentistas mexicanos.</p>
       </div>
       <div class="features-grid">
         {features.map((f, i) => (
-          <div class="feature-card" data-animate data-delay={String((i % 3) + 1)}>
+          <div class="feature-card card-glow" data-animate data-delay={String((i % 3) + 1)}>
             <div class="feature-icon">
               <i class={`fa-solid ${f.icon}`}></i>
             </div>
@@ -373,14 +382,14 @@ const faqs = [
   <!-- Testimonials Grid -->
   <section class="testimonials">
     <div class="container">
-      <div class="section-header" data-animate>
+      <div class="section-header section-reveal" data-animate>
         <span class="section-tag">Testimonios</span>
         <h2>Lo que dicen nuestros clientes</h2>
         <p>Consultorios de todo México confían en SmartDental Cloud para su gestión diaria.</p>
       </div>
       <div class="testimonials-grid">
         {testimonials.map((t, i) => (
-          <div class="testimonial-card" data-animate data-delay={String(i + 1)}>
+          <div class="testimonial-card card-glow" data-animate data-delay={String(i + 1)}>
             <div class="testimonial-stars">
               <i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star"></i>
@@ -495,10 +504,14 @@ const faqs = [
 
   <!-- CTA Final -->
   <section class="cta">
+    <div class="cta-bg-effects">
+      <div class="cta-orb cta-orb-1"></div>
+      <div class="cta-orb cta-orb-2"></div>
+    </div>
     <div class="container cta-inner">
-      <h2>Empieza hoy con 14 días gratis</h2>
-      <p>Sin tarjeta de crédito. Sin compromisos. Cancela cuando quieras.</p>
-      <a href={`${appUrl}/register`} class="btn btn-white btn-lg">
+      <h2 data-animate>Empieza hoy con 14 días gratis</h2>
+      <p data-animate data-delay="1">Sin tarjeta de crédito. Sin compromisos. Cancela cuando quieras.</p>
+      <a href={`${appUrl}/register`} class="btn btn-white btn-lg btn-glow btn-shimmer btn-ripple" data-animate data-delay="2">
         <i class="fa-solid fa-rocket"></i> Crear Mi Consultorio
       </a>
     </div>
@@ -1364,5 +1377,220 @@ const faqs = [
 
     .clinic-content h2 { font-size: 26px; }
     .cta h2 { font-size: 28px; }
+  }
+</style>
+
+<!-- Additional animation styles -->
+<style is:global>
+  /* CTA Section Effects */
+  .cta {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .cta-bg-effects {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+  }
+  
+  .cta-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: orbFloat 8s ease-in-out infinite;
+  }
+  
+  .cta-orb-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    top: -100px;
+    left: -100px;
+    animation-delay: 0s;
+  }
+  
+  .cta-orb-2 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(6,182,212,0.3) 0%, transparent 70%);
+    bottom: -50px;
+    right: -50px;
+    animation-delay: 4s;
+  }
+  
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(20px, -20px) scale(1.05); }
+    50% { transform: translate(0, -30px) scale(1); }
+    75% { transform: translate(-20px, -10px) scale(0.95); }
+  }
+  
+  .cta .cta-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Hero section z-index fix */
+  .hero {
+    position: relative;
+  }
+  
+  .hero-decorations {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* Logo wall animations */
+  .logo-wall-grid {
+    animation: scrollLogos 30s linear infinite;
+  }
+  
+  @keyframes scrollLogos {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Journey card hover effects */
+  .journey-card {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .journey-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .journey-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  /* Feature card shine effect */
+  .feature-card {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .feature-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(255,255,255,0.3) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+  
+  .feature-card:hover::after {
+    transform: translateX(100%);
+  }
+
+  /* Stat counter animation on view */
+  .stat-item {
+    transition: transform 0.3s ease;
+  }
+  
+  .stat-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .stat-item i {
+    transition: transform 0.3s ease;
+  }
+  
+  .stat-item:hover i {
+    transform: scale(1.2) rotate(5deg);
+  }
+
+  /* Testimonial card entrance animation */
+  .testimonial-card {
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .testimonial-card.animate-in {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* FAQ item hover */
+  .faq-item {
+    transition: all 0.3s ease;
+  }
+  
+  .faq-item:hover {
+    transform: translateX(5px);
+    border-color: var(--primary);
+  }
+
+  /* Button hover enhancement */
+  .btn {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      45deg,
+      transparent 40%,
+      rgba(255,255,255,0.1) 50%,
+      transparent 60%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+  }
+  
+  .btn:hover::before {
+    transform: translateX(100%);
+  }
+
+  /* Step card number animation */
+  .step-number {
+    transition: all 0.3s ease;
+  }
+  
+  .step-card:hover .step-number {
+    transform: scale(1.1) rotate(-5deg);
+    color: var(--primary);
+  }
+
+  /* Logo wall brand hover */
+  .clinic-logo {
+    transition: all 0.3s ease;
+  }
+  
+  .clinic-logo:hover {
+    transform: translateY(-3px);
+  }
+  
+  .clinic-logo:hover .clinic-initials {
+    transform: scale(1.1);
+  }
+  
+  .clinic-initials {
+    transition: transform 0.3s ease;
   }
 </style>
