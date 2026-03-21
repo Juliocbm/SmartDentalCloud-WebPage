@@ -1,0 +1,225 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const appUrl = import.meta.env.PUBLIC_APP_URL || 'https://app.smartdentalcloud.com';
+const year = new Date().getFullYear();
+---
+
+<Layout
+  title="Términos y Condiciones"
+  description="Términos y Condiciones de uso de SmartDental Cloud. Lee nuestras condiciones antes de usar el servicio."
+>
+  <Header />
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="section-tag">Legal</span>
+      <h1>Términos y Condiciones</h1>
+      <p>Última actualización: 1 de enero de {year}</p>
+    </div>
+  </section>
+
+  <section class="legal-content">
+    <div class="container">
+      <div class="legal-body">
+
+        <p>
+          Al acceder y utilizar SmartDental Cloud, usted acepta quedar vinculado por los presentes Términos y
+          Condiciones. Si no está de acuerdo con alguno de estos términos, no utilice el servicio.
+        </p>
+
+        <h2>1. Descripción del servicio</h2>
+        <p>
+          SmartDental Cloud es una plataforma SaaS (Software as a Service) de gestión para consultorios dentales
+          que incluye, entre otras funcionalidades: gestión de pacientes, agenda de citas, facturación electrónica
+          CFDI, inventario y reportes. El acceso al servicio se realiza a través de internet mediante los
+          dispositivos compatibles del usuario.
+        </p>
+
+        <h2>2. Registro y cuenta de usuario</h2>
+        <p>Para utilizar el servicio, el usuario debe:</p>
+        <ul>
+          <li>Registrarse proporcionando información veraz, completa y actualizada.</li>
+          <li>Mantener la confidencialidad de sus credenciales de acceso.</li>
+          <li>Notificar inmediatamente cualquier uso no autorizado de su cuenta.</li>
+          <li>Ser mayor de 18 años y tener capacidad legal para contratar.</li>
+        </ul>
+        <p>
+          SmartDental Cloud no será responsable de pérdidas derivadas del uso no autorizado de su cuenta
+          cuando el usuario no haya notificado oportunamente dicho acceso.
+        </p>
+
+        <h2>3. Planes y facturación</h2>
+        <p>
+          El servicio se ofrece bajo diferentes planes de suscripción con distintas funcionalidades y límites.
+          Los precios están expresados en pesos mexicanos (MXN) e incluyen IVA. El cargo se realiza al inicio
+          de cada período de suscripción (mensual o anual).
+        </p>
+        <p>
+          El usuario puede cancelar su suscripción en cualquier momento desde el panel de configuración.
+          La cancelación tendrá efecto al finalizar el período de facturación vigente. No se realizan
+          reembolsos por períodos parciales.
+        </p>
+
+        <h2>4. Prueba gratuita</h2>
+        <p>
+          SmartDental Cloud ofrece una prueba gratuita de 14 días sin requerir tarjeta de crédito. Al finalizar
+          el período de prueba, el usuario deberá activar un plan de pago para continuar utilizando el servicio.
+          Los datos del período de prueba se conservan por 90 días adicionales tras la expiración.
+        </p>
+
+        <h2>5. Propiedad intelectual</h2>
+        <p>
+          Todo el contenido, código, diseño, marcas y materiales de SmartDental Cloud son propiedad exclusiva
+          de SmartDental Cloud S.A.P.I. de C.V. y están protegidos por las leyes de propiedad intelectual
+          aplicables. El usuario no puede copiar, modificar, distribuir, vender o sublicenciar ningún componente
+          del servicio.
+        </p>
+
+        <h2>6. Datos del usuario y privacidad</h2>
+        <p>
+          El usuario es el único responsable de los datos personales de sus pacientes que ingrese a la plataforma.
+          SmartDental Cloud actúa como encargado del tratamiento de dichos datos conforme al
+          <a href="/privacy">Aviso de Privacidad</a>. El usuario garantiza tener las autorizaciones necesarias
+          para ingresar y tratar dicha información.
+        </p>
+
+        <h2>7. Disponibilidad del servicio</h2>
+        <p>
+          SmartDental Cloud se compromete a mantener una disponibilidad del 99.9% mensual, excluyendo
+          mantenimientos programados notificados con anticipación. No garantizamos disponibilidad ininterrumpida
+          en casos de fuerza mayor, fallos de proveedores de internet o eventos fuera de nuestro control.
+        </p>
+
+        <h2>8. Limitación de responsabilidad</h2>
+        <p>
+          SmartDental Cloud no será responsable por daños indirectos, incidentales, especiales o consecuentes
+          derivados del uso o imposibilidad de uso del servicio. La responsabilidad total de SmartDental Cloud
+          no excederá el monto pagado por el usuario en los últimos tres meses de suscripción.
+        </p>
+
+        <h2>9. Uso aceptable</h2>
+        <p>El usuario se compromete a no utilizar el servicio para:</p>
+        <ul>
+          <li>Actividades ilegales o que infrinjan derechos de terceros.</li>
+          <li>Enviar spam o comunicaciones no solicitadas masivamente.</li>
+          <li>Intentar acceder sin autorización a sistemas o datos ajenos.</li>
+          <li>Introducir virus, malware o código malicioso.</li>
+          <li>Suplantar la identidad de otras personas u organizaciones.</li>
+        </ul>
+
+        <h2>10. Modificaciones al servicio y a estos términos</h2>
+        <p>
+          SmartDental Cloud se reserva el derecho de modificar, suspender o descontinuar cualquier aspecto
+          del servicio en cualquier momento. Los cambios sustanciales a estos términos serán notificados
+          con al menos 30 días de anticipación por correo electrónico.
+        </p>
+
+        <h2>11. Ley aplicable y jurisdicción</h2>
+        <p>
+          Estos términos se rigen por las leyes de los Estados Unidos Mexicanos. Para cualquier controversia
+          derivada de su interpretación o cumplimiento, las partes se someten a la jurisdicción de los tribunales
+          competentes de la Ciudad de México, renunciando a cualquier otro fuero que pudiere corresponderles.
+        </p>
+
+        <h2>12. Contacto</h2>
+        <p>
+          Para cualquier consulta relacionada con estos términos, puede contactarnos en:<br />
+          <a href="mailto:legal@smartdentalcloud.com">legal@smartdentalcloud.com</a>
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    padding: 64px 0 40px;
+    background: var(--surface-alt);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-hero h1 {
+    font-size: 36px;
+    font-weight: 800;
+    margin: 12px 0 8px;
+  }
+
+  .page-hero p {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .section-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .legal-content {
+    padding: 64px 0 100px;
+  }
+
+  .legal-body {
+    max-width: 760px;
+  }
+
+  .legal-body > p:first-child {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    padding: 20px;
+    background: var(--surface-alt);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 32px;
+  }
+
+  .legal-body h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 40px 0 12px;
+    color: var(--text);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .legal-body p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .legal-body ul {
+    padding-left: 20px;
+    margin-bottom: 16px;
+  }
+
+  .legal-body ul li {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 6px;
+  }
+
+  .legal-body a {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+
+  .legal-body strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+</style>

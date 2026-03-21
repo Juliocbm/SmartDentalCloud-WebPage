@@ -9,7 +9,7 @@ import testimonialImg from '../Images/dentista_03.png';
 const appUrl = import.meta.env.PUBLIC_APP_URL || 'https://app.smartdentalcloud.com';
 const apiUrl = import.meta.env.PUBLIC_API_URL || 'https://api.smartdentalcloud.com';
 
-// Fetch plans from API at build time (SSG) or request time (SSR)
+// Fetch plans from API at build time
 let plans: any[] = [];
 try {
   const res = await fetch(`${apiUrl}/api/plans`);
@@ -28,13 +28,13 @@ try {
     {
       id: 'pro', name: 'Profesional', description: 'Para consultorios en crecimiento',
       monthlyPrice: 999, yearlyPrice: 9990, patientLimit: 500, userLimit: 10,
-      features: ['Todo en Básico', 'Reportes avanzados', 'Inventario', 'CFDI / Timbrado', 'Soporte prioritario'],
+      features: ['Todo en Básico', 'Reportes avanzados', 'Inventario', 'CFDI / Timbrado SAT', 'Soporte prioritario'],
       isRecommended: true
     },
     {
       id: 'enterprise', name: 'Empresarial', description: 'Para clínicas y corporativos',
       monthlyPrice: 1999, yearlyPrice: 19990, patientLimit: null, userLimit: null,
-      features: ['Todo en Profesional', 'Pacientes ilimitados', 'Usuarios ilimitados', 'Dominio personalizado', 'Soporte dedicado'],
+      features: ['Todo en Profesional', 'Pacientes ilimitados', 'Usuarios ilimitados', 'Dominio personalizado', 'API de integración', 'Soporte dedicado 24/7'],
       isRecommended: false
     }
   ];
@@ -48,19 +48,42 @@ function formatLimit(limit: number | null | undefined): string {
   if (!limit || limit < 0) return 'Ilimitados';
   return limit.toString();
 }
+
+const faqs = [
+  { q: '¿Necesito tarjeta de crédito para la prueba?', a: 'No. La prueba de 14 días es completamente gratis y no requiere tarjeta de crédito.' },
+  { q: '¿Puedo cambiar de plan después?', a: 'Sí, puedes subir o bajar de plan en cualquier momento desde tu panel de configuración.' },
+  { q: '¿El sistema cumple con los requisitos del SAT?', a: 'Sí. SmartDental Cloud genera y timbra CFDIs 4.0 directamente ante el SAT sin software adicional.' },
+  { q: '¿Qué pasa al terminar la prueba?', a: 'Si no activas un plan, tu cuenta se pausa pero tus datos se mantienen seguros por 90 días.' },
+  { q: '¿Mis datos están seguros?', a: 'Usamos encriptación de grado bancario y nuestros servidores están en centros de datos certificados en México.' },
+  { q: '¿Puedo importar mis pacientes desde otro sistema?', a: 'Sí. Nuestro equipo te ayuda a importar pacientes desde Excel o sistemas anteriores sin costo adicional.' },
+];
 ---
 
-<Layout title="Precios" description="Planes flexibles para consultorios de cualquier tamaño. Todos incluyen 14 días de prueba gratuita.">
+<Layout
+  title="Precios"
+  description="Planes flexibles para consultorios de cualquier tamaño. Todos incluyen 14 días de prueba gratuita y CFDI incluido."
+>
   <Header />
 
+  <!-- Hero -->
   <section class="pricing-hero">
     <div class="container">
       <span class="section-tag">Precios</span>
       <h1>Planes para cada consultorio</h1>
-      <p>Todos los planes incluyen 14 días de prueba gratuita sin tarjeta de crédito.</p>
+      <p>Todos los planes incluyen 14 días de prueba gratuita sin tarjeta de crédito.<br />CFDI y facturación SAT incluidos desde el plan Profesional.</p>
+
+      <!-- Billing toggle -->
+      <div class="billing-toggle" id="billingToggle" role="group" aria-label="Periodo de facturación">
+        <button class="toggle-btn active" data-period="monthly" id="btnMonthly">Mensual</button>
+        <button class="toggle-btn" data-period="yearly" id="btnYearly">
+          Anual
+          <span class="toggle-save-badge">2 meses gratis</span>
+        </button>
+      </div>
     </div>
   </section>
 
+  <!-- Pricing Cards -->
   <section class="pricing-section">
     <div class="container">
       <div class="pricing-grid">
@@ -69,18 +92,34 @@ function formatLimit(limit: number | null | undefined): string {
             {plan.isRecommended && <div class="recommended-badge">Más Popular</div>}
             <h3>{plan.name}</h3>
             {plan.description && <p class="plan-desc">{plan.description}</p>}
-            <div class="price-block">
+
+            <!-- Monthly price (shown by default) -->
+            <div class="price-block price-monthly">
               <span class="price-amount">{formatCurrency(plan.monthlyPrice)}</span>
               <span class="price-period">/mes</span>
             </div>
-            {plan.yearlyPrice && (
-              <p class="yearly-price">
-                o {formatCurrency(plan.yearlyPrice)}/año <span class="save-badge">Ahorra 2 meses</span>
-              </p>
-            )}
-            <a href={`${appUrl}/register?plan=${plan.id}`} class:list={['btn', 'btn-block', plan.isRecommended ? 'btn-primary' : 'btn-outline']}>
+
+            <!-- Yearly price (hidden by default) -->
+            <div class="price-block price-yearly" style="display:none;">
+              <span class="price-amount">{formatCurrency(Math.round(plan.yearlyPrice / 12))}</span>
+              <span class="price-period">/mes</span>
+            </div>
+
+            <!-- Yearly total annotation -->
+            <p class="yearly-note price-yearly-note" style="display:none;">
+              {formatCurrency(plan.yearlyPrice)}/año · <span class="save-badge">Ahorra {formatCurrency(plan.monthlyPrice * 12 - plan.yearlyPrice)}</span>
+            </p>
+            <p class="yearly-note price-monthly-note">
+              {plan.yearlyPrice ? <>o {formatCurrency(plan.yearlyPrice)}/año <span class="save-badge">Ahorra 2 meses</span></> : null}
+            </p>
+
+            <a
+              href={`${appUrl}/register?plan=${plan.id}`}
+              class:list={['btn', 'btn-block', plan.isRecommended ? 'btn-primary' : 'btn-outline']}
+            >
               Comenzar Prueba Gratis
             </a>
+
             <ul class="plan-features">
               <li class="limit-item">
                 <i class="fa-solid fa-users"></i>
@@ -98,6 +137,11 @@ function formatLimit(limit: number | null | undefined): string {
           </div>
         ))}
       </div>
+
+      <div class="pricing-note">
+        <i class="fa-solid fa-shield-check"></i>
+        Todos los precios en MXN, impuestos incluidos. Cancela en cualquier momento.
+      </div>
     </div>
   </section>
 
@@ -108,8 +152,62 @@ function formatLimit(limit: number | null | undefined): string {
         <Image src={testimonialImg} alt="C.D. Raúl Alejandro Bautista" width={64} quality={85} class="trust-photo" />
       </div>
       <div class="trust-text">
-        <p>"SmartDental Cloud transformó la forma en que administro mi consultorio. Lo recomiendo ampliamente."</p>
+        <p>"SmartDental Cloud transformó la forma en que administro mi consultorio. Lo recomiendo ampliamente a cualquier dentista que quiera crecer."</p>
         <span><strong>C.D. Raúl Alejandro Bautista M.</strong> · Monterrey, N.L.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Comparison (what's included) -->
+  <section class="includes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Incluido en todos los planes</span>
+        <h2>Todo lo que necesitas desde el día uno</h2>
+      </div>
+      <div class="includes-grid">
+        <div class="include-item">
+          <i class="fa-solid fa-shield-halved"></i>
+          <div>
+            <strong>Seguridad bancaria</strong>
+            <span>Encriptación SSL y respaldo diario en la nube</span>
+          </div>
+        </div>
+        <div class="include-item">
+          <i class="fa-solid fa-headset"></i>
+          <div>
+            <strong>Soporte en español</strong>
+            <span>Equipo de soporte disponible vía chat y email</span>
+          </div>
+        </div>
+        <div class="include-item">
+          <i class="fa-solid fa-arrows-rotate"></i>
+          <div>
+            <strong>Actualizaciones automáticas</strong>
+            <span>Siempre tendrás la última versión sin costo adicional</span>
+          </div>
+        </div>
+        <div class="include-item">
+          <i class="fa-solid fa-mobile-screen"></i>
+          <div>
+            <strong>Acceso multidispositivo</strong>
+            <span>Funciona en computadora, tablet y smartphone</span>
+          </div>
+        </div>
+        <div class="include-item">
+          <i class="fa-solid fa-file-import"></i>
+          <div>
+            <strong>Migración de datos</strong>
+            <span>Te ayudamos a importar tus pacientes desde cualquier sistema</span>
+          </div>
+        </div>
+        <div class="include-item">
+          <i class="fa-solid fa-server"></i>
+          <div>
+            <strong>99.9% de disponibilidad</strong>
+            <span>Infraestructura en México con alta disponibilidad garantizada</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -122,22 +220,31 @@ function formatLimit(limit: number | null | undefined): string {
         <h2>Preguntas Frecuentes</h2>
       </div>
       <div class="faq-grid">
-        <div class="faq-item">
-          <h4>¿Necesito tarjeta de crédito para la prueba?</h4>
-          <p>No. La prueba de 14 días es completamente gratis y no requiere tarjeta de crédito.</p>
-        </div>
-        <div class="faq-item">
-          <h4>¿Puedo cambiar de plan después?</h4>
-          <p>Sí, puedes subir o bajar de plan en cualquier momento desde tu panel de configuración.</p>
-        </div>
-        <div class="faq-item">
-          <h4>¿Qué pasa al terminar la prueba?</h4>
-          <p>Si no activas un plan, tu cuenta se pausa pero tus datos se mantienen seguros por 90 días.</p>
-        </div>
-        <div class="faq-item">
-          <h4>¿Mis datos están seguros?</h4>
-          <p>Sí. Usamos encriptación de grado bancario y nuestros servidores están en centros de datos certificados en México.</p>
-        </div>
+        {faqs.map(item => (
+          <div class="faq-item">
+            <div class="faq-icon"><i class="fa-solid fa-circle-question"></i></div>
+            <div>
+              <h4>{item.q}</h4>
+              <p>{item.a}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="pricing-cta">
+    <div class="container pricing-cta-inner">
+      <h2>¿Todavía tienes dudas?</h2>
+      <p>Habla con nuestro equipo. Te ayudamos a elegir el plan ideal para tu consultorio.</p>
+      <div class="cta-actions">
+        <a href={`${appUrl}/register`} class="btn btn-white btn-lg">
+          <i class="fa-solid fa-rocket"></i> Comenzar Prueba Gratis
+        </a>
+        <a href="/#contact" class="btn btn-lg" style="color:white;border:2px solid rgba(255,255,255,0.5);">
+          <i class="fa-solid fa-envelope"></i> Contactar ventas
+        </a>
       </div>
     </div>
   </section>
@@ -148,19 +255,22 @@ function formatLimit(limit: number | null | undefined): string {
 <style>
   .pricing-hero {
     text-align: center;
-    padding: 64px 0 40px;
+    padding: 64px 0 48px;
     background: var(--surface-alt);
+    border-bottom: 1px solid var(--border);
   }
 
   .pricing-hero h1 {
     font-size: 40px;
     font-weight: 800;
-    margin: 12px 0;
+    margin: 12px 0 16px;
   }
 
-  .pricing-hero p {
+  .pricing-hero > .container > p {
     font-size: 17px;
     color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 32px;
   }
 
   .section-tag {
@@ -173,8 +283,63 @@ function formatLimit(limit: number | null | undefined): string {
     font-weight: 600;
   }
 
+  /* ===== Billing Toggle ===== */
+  .billing-toggle {
+    display: inline-flex;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 4px;
+    gap: 4px;
+  }
+
+  .toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 22px;
+    border-radius: 100px;
+    border: none;
+    background: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .toggle-btn.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+  }
+
+  .toggle-btn:not(.active):hover {
+    background: var(--surface-alt);
+    color: var(--text);
+  }
+
+  .toggle-save-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: #ecfdf5;
+    color: var(--success);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .toggle-btn.active .toggle-save-badge {
+    background: rgba(255,255,255,0.2);
+    color: white;
+  }
+
+  /* ===== Pricing Grid ===== */
   .pricing-section {
-    padding: 60px 0 100px;
+    padding: 64px 0 80px;
+    background: var(--surface);
   }
 
   .pricing-grid {
@@ -182,7 +347,8 @@ function formatLimit(limit: number | null | undefined): string {
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     max-width: 1000px;
-    margin: 0 auto;
+    margin: 0 auto 32px;
+    align-items: start;
   }
 
   .pricing-card {
@@ -193,12 +359,16 @@ function formatLimit(limit: number | null | undefined): string {
     border-radius: var(--radius-lg);
     display: flex;
     flex-direction: column;
+    transition: box-shadow 0.2s;
+  }
+
+  .pricing-card:hover {
+    box-shadow: var(--shadow-lg);
   }
 
   .pricing-card.recommended {
     border-color: var(--primary);
-    box-shadow: 0 8px 30px rgba(37, 99, 235, 0.12);
-    transform: scale(1.03);
+    box-shadow: 0 8px 30px rgba(37, 99, 235, 0.15);
   }
 
   .recommended-badge {
@@ -227,9 +397,7 @@ function formatLimit(limit: number | null | undefined): string {
     margin-bottom: 20px;
   }
 
-  .price-block {
-    margin-bottom: 4px;
-  }
+  .price-block { margin-bottom: 4px; }
 
   .price-amount {
     font-size: 36px;
@@ -242,10 +410,11 @@ function formatLimit(limit: number | null | undefined): string {
     color: var(--text-muted);
   }
 
-  .yearly-price {
+  .yearly-note {
     font-size: 13px;
     color: var(--text-muted);
     margin-bottom: 24px;
+    min-height: 22px;
   }
 
   .save-badge {
@@ -265,10 +434,7 @@ function formatLimit(limit: number | null | undefined): string {
     margin-bottom: 24px;
   }
 
-  .plan-features {
-    list-style: none;
-    flex: 1;
-  }
+  .plan-features { list-style: none; flex: 1; }
 
   .plan-features li {
     display: flex;
@@ -286,14 +452,8 @@ function formatLimit(limit: number | null | undefined): string {
     text-align: center;
   }
 
-  .limit-item {
-    font-weight: 600;
-    color: var(--text) !important;
-  }
-
-  .limit-item i {
-    color: var(--primary) !important;
-  }
+  .limit-item { font-weight: 600; color: var(--text) !important; }
+  .limit-item i { color: var(--primary) !important; }
 
   .divider {
     border-top: 1px solid var(--border);
@@ -301,11 +461,23 @@ function formatLimit(limit: number | null | undefined): string {
     padding: 0 !important;
   }
 
-  /* Trust Banner */
+  .pricing-note {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .pricing-note i { color: var(--success); }
+
+  /* ===== Trust Banner ===== */
   .trust-banner {
     padding: 48px 0;
-    background: var(--surface);
+    background: var(--surface-alt);
     border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
   }
 
   .trust-inner {
@@ -316,9 +488,7 @@ function formatLimit(limit: number | null | undefined): string {
     margin: 0 auto;
   }
 
-  .trust-avatar {
-    flex-shrink: 0;
-  }
+  .trust-avatar { flex-shrink: 0; }
 
   .trust-photo {
     width: 64px;
@@ -342,10 +512,10 @@ function formatLimit(limit: number | null | undefined): string {
     color: var(--text-secondary);
   }
 
-  /* FAQ */
-  .faq {
+  /* ===== Includes ===== */
+  .includes {
     padding: 80px 0;
-    background: var(--surface-alt);
+    background: var(--surface);
   }
 
   .section-header {
@@ -359,19 +529,75 @@ function formatLimit(limit: number | null | undefined): string {
     margin-top: 12px;
   }
 
+  .includes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .include-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .include-item > i {
+    font-size: 20px;
+    color: var(--primary);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .include-item strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .include-item span {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* ===== FAQ ===== */
+  .faq {
+    padding: 80px 0;
+    background: var(--surface-alt);
+  }
+
   .faq-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    max-width: 860px;
+    gap: 16px;
+    max-width: 900px;
     margin: 0 auto;
   }
 
   .faq-item {
+    display: flex;
+    gap: 14px;
     padding: 24px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .faq-icon i {
+    font-size: 18px;
+    color: var(--primary);
   }
 
   .faq-item h4 {
@@ -386,10 +612,76 @@ function formatLimit(limit: number | null | undefined): string {
     line-height: 1.6;
   }
 
+  /* ===== Pricing CTA ===== */
+  .pricing-cta {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
+    text-align: center;
+  }
+
+  .pricing-cta h2 {
+    font-size: 34px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 12px;
+  }
+
+  .pricing-cta > .container > p {
+    font-size: 17px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 32px;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
   @media (max-width: 768px) {
     .pricing-hero h1 { font-size: 30px; }
-    .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
-    .pricing-card.recommended { transform: none; }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
     .faq-grid { grid-template-columns: 1fr; }
+    .includes-grid { grid-template-columns: 1fr 1fr; }
+    .trust-inner { flex-direction: column; text-align: center; }
+    .cta-actions { flex-direction: column; align-items: center; }
+    .pricing-cta h2 { font-size: 26px; }
+  }
+
+  @media (max-width: 480px) {
+    .includes-grid { grid-template-columns: 1fr; }
   }
 </style>
+
+<script>
+  const btnMonthly = document.getElementById('btnMonthly');
+  const btnYearly = document.getElementById('btnYearly');
+
+  function setPeriod(period: 'monthly' | 'yearly') {
+    const isYearly = period === 'yearly';
+
+    // Toggle active state on buttons
+    btnMonthly?.classList.toggle('active', !isYearly);
+    btnYearly?.classList.toggle('active', isYearly);
+
+    // Show/hide price blocks
+    document.querySelectorAll<HTMLElement>('.price-monthly').forEach(el => {
+      el.style.display = isYearly ? 'none' : 'block';
+    });
+    document.querySelectorAll<HTMLElement>('.price-yearly').forEach(el => {
+      el.style.display = isYearly ? 'block' : 'none';
+    });
+
+    // Show/hide yearly/monthly notes
+    document.querySelectorAll<HTMLElement>('.price-yearly-note').forEach(el => {
+      el.style.display = isYearly ? 'block' : 'none';
+    });
+    document.querySelectorAll<HTMLElement>('.price-monthly-note').forEach(el => {
+      el.style.display = isYearly ? 'none' : 'block';
+    });
+  }
+
+  btnMonthly?.addEventListener('click', () => setPeriod('monthly'));
+  btnYearly?.addEventListener('click', () => setPeriod('yearly'));
+</script>

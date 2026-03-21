@@ -6,17 +6,18 @@ import { Image } from 'astro:assets';
 
 import heroImg from '../Images/dentista_01.png';
 import clinicImg from '../Images/banner_02.webp';
-import testimonialImg from '../Images/dentista_04.png';
-
+import testimonialImg1 from '../Images/dentista_04.png';
+import testimonialImg2 from '../Images/dentista_02.png';
+import testimonialImg3 from '../Images/dentista_03.png';
 
 const appUrl = import.meta.env.PUBLIC_APP_URL || 'https://app.smartdentalcloud.com';
 
 const features = [
-  { icon: 'fa-users', title: 'Gestión de Pacientes', desc: 'Expedientes digitales completos con historial clínico, odontograma y documentos.' },
+  { icon: 'fa-users', title: 'Gestión de Pacientes', desc: 'Expedientes digitales completos con historial clínico, odontograma y documentos adjuntos.' },
   { icon: 'fa-calendar-days', title: 'Citas y Calendario', desc: 'Agenda inteligente con recordatorios automáticos por email y WhatsApp.' },
   { icon: 'fa-tooth', title: 'Odontograma Digital', desc: 'Registra tratamientos y hallazgos con un odontograma interactivo profesional.' },
-  { icon: 'fa-file-invoice-dollar', title: 'Facturación y CFDI', desc: 'Genera facturas y timbra CFDIs directamente desde el sistema.' },
-  { icon: 'fa-boxes-stacked', title: 'Inventario', desc: 'Control de materiales con alertas de stock mínimo y trazabilidad.' },
+  { icon: 'fa-file-invoice-dollar', title: 'Facturación y CFDI', desc: 'Timbra CFDIs directamente ante el SAT desde el sistema, sin software adicional.' },
+  { icon: 'fa-boxes-stacked', title: 'Inventario', desc: 'Control de materiales con alertas de stock mínimo y trazabilidad de consumos.' },
   { icon: 'fa-chart-line', title: 'Reportes y Analíticas', desc: 'Dashboard con métricas de producción, ingresos y ocupación en tiempo real.' },
 ];
 
@@ -25,6 +26,15 @@ const stats = [
   { value: '50,000+', label: 'Pacientes gestionados', icon: 'fa-user-group' },
   { value: '99.9%', label: 'Disponibilidad', icon: 'fa-server' },
   { value: '4.9/5', label: 'Satisfacción', icon: 'fa-star' },
+];
+
+const logoWall = [
+  { name: 'Dental Smile', initials: 'DS', color: '#2563eb' },
+  { name: 'Oral Pro', initials: 'OP', color: '#059669' },
+  { name: 'DentGroup', initials: 'DG', color: '#7c3aed' },
+  { name: 'Boca Sana', initials: 'BS', color: '#d97706' },
+  { name: 'OdontoPlus', initials: 'OP', color: '#0891b2' },
+  { name: 'Clínica Bravo', initials: 'CB', color: '#dc2626' },
 ];
 
 const journeyStages = [
@@ -50,7 +60,7 @@ const journeyStages = [
     bg: '#fef3c7',
     title: 'Aumenta tus ingresos',
     desc: 'Más facilidades para tus pacientes, más ingresos para ti.',
-    items: ['Facturación y timbrado CFDI', 'Control de pagos y abonos', 'Presupuestos de tratamiento', 'Reportes de producción e ingresos'],
+    items: ['Facturación y timbrado CFDI ante el SAT', 'Control de pagos y abonos', 'Presupuestos de tratamiento', 'Reportes de producción e ingresos'],
   },
   {
     icon: 'fa-gears',
@@ -67,9 +77,71 @@ const steps = [
   { num: '2', icon: 'fa-sliders', title: 'Configura tu consultorio', desc: 'Personaliza horarios, servicios, usuarios y catálogos.' },
   { num: '3', icon: 'fa-rocket', title: '¡Listo para atender!', desc: 'Comienza a gestionar pacientes, citas y facturación al instante.' },
 ];
+
+const comparisonRows = [
+  { feature: 'Acceso desde cualquier dispositivo', us: true, excel: false, legacy: 'partial' },
+  { feature: 'Timbrado CFDI integrado (SAT)', us: true, excel: false, legacy: false },
+  { feature: 'Recordatorios automáticos WhatsApp', us: true, excel: false, legacy: false },
+  { feature: 'Actualizaciones automáticas', us: true, excel: true, legacy: false },
+  { feature: 'Respaldo en la nube', us: true, excel: false, legacy: false },
+  { feature: 'Odontograma digital', us: true, excel: false, legacy: 'partial' },
+  { feature: 'Soporte técnico dedicado', us: true, excel: false, legacy: 'partial' },
+  { feature: 'Sin instalación local', us: true, excel: true, legacy: false },
+];
+
+const testimonials = [
+  {
+    quote: 'Desde que implementamos SmartDental Cloud, la administración de mi consultorio se simplificó enormemente. Ahora puedo enfocarme en lo que realmente importa: mis pacientes.',
+    name: 'C.D. Raúl Alejandro Bautista M.',
+    role: 'Cirujano Dentista · Monterrey, N.L.',
+    img: testimonialImg1,
+  },
+  {
+    quote: 'El timbrado de CFDI directamente desde el sistema nos ahorró horas cada semana. Ya no necesitamos ningún otro software para facturar a nuestros pacientes.',
+    name: 'C.D. Gabriela Torres R.',
+    role: 'Directora · Clínica Oral Pro · Guadalajara, Jal.',
+    img: testimonialImg2,
+  },
+  {
+    quote: 'Los recordatorios automáticos de WhatsApp redujeron nuestras citas canceladas en un 40%. El retorno de inversión fue inmediato desde el primer mes.',
+    name: 'C.D. Eduardo Mora S.',
+    role: 'Ortodoncista · Puebla, Pue.',
+    img: testimonialImg3,
+  },
+];
+
+const faqs = [
+  {
+    q: '¿Necesito tarjeta de crédito para la prueba?',
+    a: 'No. La prueba de 14 días es completamente gratis y no requiere tarjeta de crédito ni compromiso.',
+  },
+  {
+    q: '¿El sistema cumple con los requisitos del SAT?',
+    a: 'Sí. SmartDental Cloud genera y timbra CFDIs directamente ante el SAT. Compatible con CFDI 4.0.',
+  },
+  {
+    q: '¿Puedo cambiar de plan después?',
+    a: 'Sí, puedes subir o bajar de plan en cualquier momento desde tu panel de configuración.',
+  },
+  {
+    q: '¿Qué pasa al terminar la prueba?',
+    a: 'Si no activas un plan, tu cuenta se pausa pero tus datos se mantienen seguros por 90 días.',
+  },
+  {
+    q: '¿Mis datos están seguros?',
+    a: 'Sí. Usamos encriptación de grado bancario y nuestros servidores están en centros de datos certificados en México.',
+  },
+  {
+    q: '¿Puedo migrar mis datos desde otro sistema?',
+    a: 'Sí. Nuestro equipo de soporte te ayuda a importar tus pacientes y citas desde Excel o sistemas anteriores sin costo adicional.',
+  },
+];
 ---
 
-<Layout title="Software Dental en la Nube">
+<Layout
+  title="Software Dental en la Nube para México"
+  description="Gestiona tu consultorio dental con SmartDental Cloud: pacientes, citas, CFDI y facturación SAT, inventario y más. 14 días gratis, sin tarjeta."
+>
   <Header />
 
   <!-- Hero — Split Layout -->
@@ -77,10 +149,10 @@ const steps = [
     <div class="container hero-inner">
       <div class="hero-content">
         <span class="hero-badge">
-          <i class="fa-solid fa-sparkles"></i> 14 días gratis — sin tarjeta
+          <i class="fa-solid fa-sparkles"></i> 14 días gratis — sin tarjeta de crédito
         </span>
         <h1>El software dental que tu consultorio merece</h1>
-        <p>Gestiona pacientes, citas, facturación e inventario desde cualquier lugar. Todo en la nube, seguro y fácil de usar.</p>
+        <p>Gestiona pacientes, citas y factura CFDIs al SAT desde un solo lugar. Todo en la nube, 100% mexicano y fácil de usar.</p>
         <div class="hero-actions">
           <a href={`${appUrl}/register`} class="btn btn-primary btn-lg">
             <i class="fa-solid fa-rocket"></i> Comenzar Prueba Gratis
@@ -88,8 +160,11 @@ const steps = [
           <a href="/pricing" class="btn btn-outline btn-lg">Ver Precios</a>
         </div>
         <div class="hero-trust">
-          <i class="fa-solid fa-shield-check"></i>
-          <span>Datos encriptados · HIPAA-friendly · Servidores en México</span>
+          <span class="trust-item"><i class="fa-solid fa-shield-check"></i> Datos encriptados</span>
+          <span class="trust-sep">·</span>
+          <span class="trust-item"><i class="fa-solid fa-file-invoice-dollar"></i> CFDI 4.0 SAT</span>
+          <span class="trust-sep">·</span>
+          <span class="trust-item"><i class="fa-solid fa-server"></i> Servidores en México</span>
         </div>
       </div>
       <div class="hero-image">
@@ -101,8 +176,8 @@ const steps = [
   <!-- Stats Bar -->
   <section class="stats-bar">
     <div class="container stats-inner">
-      {stats.map(s => (
-        <div class="stat-item">
+      {stats.map((s, i) => (
+        <div class="stat-item" data-animate data-delay={String(i + 1)}>
           <i class={`fa-solid ${s.icon}`}></i>
           <span class="stat-value">{s.value}</span>
           <span class="stat-label">{s.label}</span>
@@ -111,17 +186,34 @@ const steps = [
     </div>
   </section>
 
+  <!-- Logo Wall -->
+  <section class="logo-wall">
+    <div class="container">
+      <p class="logo-wall-label">Usado por consultorios en todo México</p>
+      <div class="logo-wall-grid">
+        {logoWall.map(clinic => (
+          <div class="clinic-logo">
+            <span class="clinic-initials" style={`background: ${clinic.color}18; color: ${clinic.color};`}>
+              {clinic.initials}
+            </span>
+            <span class="clinic-name">{clinic.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- Features -->
   <section class="features" id="features">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header" data-animate>
         <span class="section-tag">Funcionalidades</span>
         <h2>Todo lo que necesitas para tu consultorio</h2>
-        <p>Herramientas profesionales diseñadas para dentistas, por dentistas.</p>
+        <p>Herramientas profesionales diseñadas para dentistas mexicanos.</p>
       </div>
       <div class="features-grid">
-        {features.map(f => (
-          <div class="feature-card">
+        {features.map((f, i) => (
+          <div class="feature-card" data-animate data-delay={String((i % 3) + 1)}>
             <div class="feature-icon">
               <i class={`fa-solid ${f.icon}`}></i>
             </div>
@@ -136,14 +228,14 @@ const steps = [
   <!-- How It Works -->
   <section class="how-it-works">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header" data-animate>
         <span class="section-tag">¿Cómo funciona?</span>
         <h2>Empieza en 3 simples pasos</h2>
         <p>Configurar tu consultorio en SmartDental Cloud es rápido y sencillo.</p>
       </div>
       <div class="steps-grid">
-        {steps.map(s => (
-          <div class="step-card">
+        {steps.map((s, i) => (
+          <div class="step-card" data-animate data-delay={String(i + 1)}>
             <div class="step-number">{s.num}</div>
             <div class="step-icon">
               <i class={`fa-solid ${s.icon}`}></i>
@@ -159,14 +251,14 @@ const steps = [
   <!-- Journey Benefits -->
   <section class="journey" id="solutions">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header" data-animate>
         <span class="section-tag">Soluciones</span>
         <h2>El software para cada etapa de tu consultorio</h2>
         <p>Herramientas pensadas para atraer pacientes, brindar experiencias memorables y hacer crecer tu negocio.</p>
       </div>
       <div class="journey-grid">
-        {journeyStages.map(stage => (
-          <div class="journey-card">
+        {journeyStages.map((stage, i) => (
+          <div class="journey-card" data-animate data-delay={String((i % 2) + 1)}>
             <div class="journey-icon" style={`background: ${stage.bg}; color: ${stage.color};`}>
               <i class={`fa-solid ${stage.icon}`}></i>
             </div>
@@ -183,15 +275,79 @@ const steps = [
     </div>
   </section>
 
+  <!-- Comparison Section -->
+  <section class="comparison">
+    <div class="container">
+      <div class="section-header" data-animate>
+        <span class="section-tag">Comparación</span>
+        <h2>¿Por qué SmartDental Cloud?</h2>
+        <p>Deja atrás el Excel y el software instalado. Así se compara con las alternativas comunes.</p>
+      </div>
+      <div class="comparison-wrapper" data-animate data-delay="1">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th class="feature-col">Característica</th>
+              <th class="us-col">
+                <div class="col-header col-header--us">
+                  <i class="fa-solid fa-tooth"></i>
+                  SmartDental Cloud
+                </div>
+              </th>
+              <th>
+                <div class="col-header">
+                  <i class="fa-solid fa-file-excel"></i>
+                  Excel / Papel
+                </div>
+              </th>
+              <th>
+                <div class="col-header">
+                  <i class="fa-solid fa-desktop"></i>
+                  Software instalado
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparisonRows.map(row => (
+              <tr>
+                <td class="feature-col">{row.feature}</td>
+                <td class="us-col">
+                  <i class="fa-solid fa-circle-check check-yes"></i>
+                </td>
+                <td>
+                  {row.excel === true
+                    ? <i class="fa-solid fa-circle-check check-yes"></i>
+                    : row.excel === 'partial'
+                    ? <i class="fa-solid fa-circle-minus check-partial"></i>
+                    : <i class="fa-solid fa-circle-xmark check-no"></i>
+                  }
+                </td>
+                <td>
+                  {row.legacy === true
+                    ? <i class="fa-solid fa-circle-check check-yes"></i>
+                    : row.legacy === 'partial'
+                    ? <i class="fa-solid fa-circle-minus check-partial"></i>
+                    : <i class="fa-solid fa-circle-xmark check-no"></i>
+                  }
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
   <!-- Video Demo -->
   <section class="video-section">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header" data-animate>
         <span class="section-tag">Demo</span>
         <h2>Mira SmartDental Cloud en acción</h2>
         <p>Descubre cómo simplificar la gestión de tu consultorio en minutos.</p>
       </div>
-      <div class="video-wrapper">
+      <div class="video-wrapper" data-animate data-delay="1">
         <video controls preload="metadata" playsinline>
           <source src="/video-generado.mp4" type="video/mp4" />
           Tu navegador no soporta video HTML5.
@@ -214,27 +370,125 @@ const steps = [
     </div>
   </section>
 
-  <!-- Testimonial -->
-  <section class="testimonial">
-    <div class="container testimonial-inner">
-      <div class="testimonial-content">
-        <div class="testimonial-stars">
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-        </div>
-        <blockquote>
-          "Desde que implementamos SmartDental Cloud, la administración de mi consultorio se simplificó enormemente. Ahora puedo enfocarme en lo que realmente importa: mis pacientes."
-        </blockquote>
-        <div class="testimonial-author">
-          <strong>C.D. Raúl Alejandro Bautista M.</strong>
-          <span>Cirujano Dentista · Monterrey, N.L.</span>
-        </div>
+  <!-- Testimonials Grid -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-header" data-animate>
+        <span class="section-tag">Testimonios</span>
+        <h2>Lo que dicen nuestros clientes</h2>
+        <p>Consultorios de todo México confían en SmartDental Cloud para su gestión diaria.</p>
       </div>
-      <div class="testimonial-image">
-        <Image src={testimonialImg} alt="C.D. Raúl Alejandro Bautista" width={420} quality={85} />
+      <div class="testimonials-grid">
+        {testimonials.map((t, i) => (
+          <div class="testimonial-card" data-animate data-delay={String(i + 1)}>
+            <div class="testimonial-stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <blockquote>"{t.quote}"</blockquote>
+            <div class="testimonial-author">
+              <Image src={t.img} alt={t.name} width={48} quality={85} class="author-img" />
+              <div>
+                <strong>{t.name}</strong>
+                <span>{t.role}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="section-header" data-animate>
+        <span class="section-tag">FAQ</span>
+        <h2>Preguntas frecuentes</h2>
+        <p>Resolvemos las dudas más comunes sobre SmartDental Cloud.</p>
+      </div>
+      <div class="faq-grid">
+        {faqs.map((item, i) => (
+          <div class="faq-item" data-animate data-delay={String((i % 2) + 1)}>
+            <div class="faq-icon"><i class="fa-solid fa-circle-question"></i></div>
+            <div>
+              <h4>{item.q}</h4>
+              <p>{item.a}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="faq-cta" data-animate>
+        <p>¿Tienes otra pregunta?</p>
+        <a href="/#contact" class="btn btn-outline">Contáctanos</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="contact-info" data-animate>
+          <span class="section-tag">Contacto</span>
+          <h2>¿Listo para empezar?</h2>
+          <p>Nuestro equipo está listo para ayudarte a encontrar el plan ideal para tu consultorio. Respuesta en menos de 24 horas.</p>
+
+          <div class="contact-channels">
+            <a href="mailto:hola@smartdentalcloud.com" class="contact-channel">
+              <div class="channel-icon" style="background: #dbeafe; color: #2563eb;">
+                <i class="fa-solid fa-envelope"></i>
+              </div>
+              <div>
+                <strong>Email</strong>
+                <span>hola@smartdentalcloud.com</span>
+              </div>
+            </a>
+            <a href="https://wa.me/528001234567" target="_blank" rel="noopener" class="contact-channel">
+              <div class="channel-icon" style="background: #d1fae5; color: #059669;">
+                <i class="fa-brands fa-whatsapp"></i>
+              </div>
+              <div>
+                <strong>WhatsApp</strong>
+                <span>+52 800 123 4567</span>
+              </div>
+            </a>
+            <a href={`${appUrl}/register`} class="contact-channel">
+              <div class="channel-icon" style="background: #ede9fe; color: #7c3aed;">
+                <i class="fa-solid fa-calendar-check"></i>
+              </div>
+              <div>
+                <strong>Agendar demo</strong>
+                <span>Gratis, sin compromiso</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <form class="contact-form" data-animate data-delay="1" action="mailto:hola@smartdentalcloud.com" method="post" enctype="text/plain">
+          <div class="form-group">
+            <label for="contact-name">Nombre</label>
+            <input type="text" id="contact-name" name="nombre" placeholder="Tu nombre completo" required />
+          </div>
+          <div class="form-group">
+            <label for="contact-email">Correo electrónico</label>
+            <input type="email" id="contact-email" name="email" placeholder="tucorreo@ejemplo.com" required />
+          </div>
+          <div class="form-group">
+            <label for="contact-clinic">Nombre del consultorio</label>
+            <input type="text" id="contact-clinic" name="consultorio" placeholder="Consultorio Dental..." />
+          </div>
+          <div class="form-group">
+            <label for="contact-msg">Mensaje</label>
+            <textarea id="contact-msg" name="mensaje" rows="4" placeholder="Cuéntanos sobre tu consultorio y cómo podemos ayudarte..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+            <i class="fa-solid fa-paper-plane"></i> Enviar Mensaje
+          </button>
+        </form>
       </div>
     </div>
   </section>
@@ -254,7 +508,7 @@ const steps = [
 </Layout>
 
 <style>
-  /* ===== Hero — Split Layout ===== */
+  /* ===== Hero ===== */
   .hero {
     padding: 60px 0 80px;
     background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 50%, #ecfdf5 100%);
@@ -268,9 +522,7 @@ const steps = [
     gap: 48px;
   }
 
-  .hero-content {
-    text-align: left;
-  }
+  .hero-content { text-align: left; }
 
   .hero-badge {
     display: inline-flex;
@@ -284,6 +536,7 @@ const steps = [
     font-weight: 600;
     color: var(--primary);
     margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
   }
 
   .hero h1 {
@@ -304,18 +557,26 @@ const steps = [
   .hero-actions {
     display: flex;
     gap: 16px;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
   }
 
   .hero-trust {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     font-size: 13px;
     color: var(--text-muted);
+    flex-wrap: wrap;
   }
 
-  .hero-trust i { color: var(--success); }
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .trust-item i { color: var(--success); }
+  .trust-sep { color: var(--border); }
 
   .hero-image {
     display: flex;
@@ -369,10 +630,61 @@ const steps = [
     font-weight: 500;
   }
 
-  /* ===== Features ===== */
-  .features {
-    padding: 100px 0;
+  /* ===== Logo Wall ===== */
+  .logo-wall {
+    padding: 32px 0;
+    background: var(--surface-alt);
+    border-bottom: 1px solid var(--border);
   }
+
+  .logo-wall-label {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+  }
+
+  .logo-wall-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .clinic-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .clinic-logo:hover { opacity: 1; }
+
+  .clinic-initials {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .clinic-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+
+  /* ===== Features ===== */
+  .features { padding: 100px 0; }
 
   .section-header {
     text-align: center;
@@ -412,12 +724,13 @@ const steps = [
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    transition: all 0.2s;
+    transition: all 0.25s;
   }
 
   .feature-card:hover {
     box-shadow: var(--shadow-lg);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    border-color: var(--primary-light);
   }
 
   .feature-icon {
@@ -491,6 +804,7 @@ const steps = [
     align-items: center;
     justify-content: center;
     margin: 0 auto 20px;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
   }
 
   .step-icon i {
@@ -527,7 +841,7 @@ const steps = [
     background: var(--surface-alt);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    transition: all 0.2s;
+    transition: all 0.25s;
   }
 
   .journey-card:hover {
@@ -545,9 +859,7 @@ const steps = [
     margin-bottom: 20px;
   }
 
-  .journey-icon i {
-    font-size: 22px;
-  }
+  .journey-icon i { font-size: 22px; }
 
   .journey-card h3 {
     font-size: 20px;
@@ -586,10 +898,83 @@ const steps = [
     flex-shrink: 0;
   }
 
+  /* ===== Comparison ===== */
+  .comparison {
+    padding: 100px 0;
+    background: var(--surface-alt);
+  }
+
+  .comparison-wrapper {
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    min-width: 560px;
+  }
+
+  .comparison-table thead tr {
+    background: var(--surface-alt);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 16px 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+
+  .feature-col {
+    text-align: left !important;
+    font-weight: 500;
+    color: var(--text);
+    width: 45%;
+  }
+
+  .us-col {
+    background: #eff6ff;
+  }
+
+  .col-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 4px 0;
+  }
+
+  .col-header i { font-size: 18px; }
+
+  .col-header--us {
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .col-header--us i { color: var(--primary); }
+
+  .comparison-table tbody tr:last-child td { border-bottom: none; }
+
+  .comparison-table tbody tr:hover td { background: var(--surface-alt); }
+  .comparison-table tbody tr:hover .us-col { background: #dbeafe; }
+
+  .check-yes { color: var(--success); font-size: 18px; }
+  .check-no { color: #ef4444; font-size: 18px; }
+  .check-partial { color: var(--warning); font-size: 18px; }
+
   /* ===== Video Demo ===== */
   .video-section {
     padding: 80px 0 100px;
-    background: var(--surface-alt);
+    background: var(--surface);
   }
 
   .video-wrapper {
@@ -627,7 +1012,7 @@ const steps = [
   .clinic-overlay {
     position: relative;
     z-index: 1;
-    background: rgba(15, 23, 42, 0.7);
+    background: rgba(15, 23, 42, 0.72);
     min-height: 400px;
     display: flex;
     align-items: center;
@@ -654,61 +1039,267 @@ const steps = [
     margin-right: auto;
   }
 
-  /* ===== Testimonial ===== */
-  .testimonial {
+  /* ===== Testimonials Grid ===== */
+  .testimonials {
     padding: 100px 0;
-    background: var(--surface);
+    background: var(--surface-alt);
   }
 
-  .testimonial-inner {
+  .testimonials-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 64px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .testimonial-card {
+    padding: 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.25s;
+  }
+
+  .testimonial-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
   }
 
   .testimonial-stars {
     display: flex;
-    gap: 4px;
-    margin-bottom: 20px;
+    gap: 3px;
   }
 
   .testimonial-stars i {
     color: #f59e0b;
-    font-size: 20px;
+    font-size: 15px;
   }
 
-  .testimonial-content blockquote {
-    font-size: 22px;
-    font-weight: 500;
-    line-height: 1.6;
+  .testimonial-card blockquote {
+    font-size: 15px;
+    line-height: 1.7;
     color: var(--text);
-    margin-bottom: 24px;
     font-style: italic;
+    flex: 1;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .author-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    border: 2px solid var(--primary-light);
+    flex-shrink: 0;
   }
 
   .testimonial-author strong {
     display: block;
-    font-size: 16px;
+    font-size: 14px;
     color: var(--text);
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
 
   .testimonial-author span {
-    font-size: 14px;
+    font-size: 12px;
     color: var(--text-secondary);
   }
 
-  .testimonial-image {
-    display: flex;
-    justify-content: center;
+  /* ===== FAQ ===== */
+  .faq {
+    padding: 100px 0;
+    background: var(--surface);
   }
 
-  .testimonial-image img {
-    max-width: 100%;
-    height: auto;
-    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.08));
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
   }
+
+  .faq-item {
+    display: flex;
+    gap: 16px;
+    padding: 24px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all 0.2s;
+  }
+
+  .faq-item:hover {
+    border-color: var(--primary-light);
+    box-shadow: var(--shadow);
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 2px;
+  }
+
+  .faq-icon i {
+    font-size: 18px;
+    color: var(--primary);
+  }
+
+  .faq-item h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .faq-item p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .faq-cta {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .faq-cta p {
+    font-size: 16px;
+    color: var(--text-secondary);
+  }
+
+  /* ===== Contact ===== */
+  .contact {
+    padding: 100px 0;
+    background: var(--surface-alt);
+  }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .contact-info .section-tag { margin-bottom: 16px; }
+
+  .contact-info h2 {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .contact-info > p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+
+  .contact-channels {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-channel {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    transition: all 0.2s;
+  }
+
+  .contact-channel:hover {
+    border-color: var(--primary-light);
+    box-shadow: var(--shadow);
+    transform: translateX(4px);
+  }
+
+  .channel-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .contact-channel strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .contact-channel span {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .contact-form {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--text);
+    background: var(--surface);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  .form-group textarea { resize: vertical; }
 
   /* ===== CTA ===== */
   .cta {
@@ -731,13 +1322,19 @@ const steps = [
   }
 
   /* ===== Responsive ===== */
-  @media (max-width: 768px) {
-    .hero-inner {
-      grid-template-columns: 1fr;
-      text-align: center;
+  @media (max-width: 1024px) {
+    .testimonials-grid { grid-template-columns: 1fr 1fr; }
+    .testimonials-grid .testimonial-card:last-child {
+      grid-column: span 2;
+      max-width: 420px;
+      margin: 0 auto;
     }
+  }
+
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr; text-align: center; }
     .hero-content { text-align: center; }
-    .hero-actions { justify-content: center; flex-wrap: wrap; }
+    .hero-actions { justify-content: center; }
     .hero-trust { justify-content: center; }
     .hero-image { order: -1; }
     .hero-image img { max-width: 280px; }
@@ -746,6 +1343,8 @@ const steps = [
     .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
     .stat-value { font-size: 26px; }
 
+    .logo-wall-grid { gap: 20px; }
+
     .features-grid { grid-template-columns: 1fr; }
 
     .steps-grid { grid-template-columns: 1fr; max-width: 400px; }
@@ -753,15 +1352,17 @@ const steps = [
 
     .journey-grid { grid-template-columns: 1fr; }
 
+    .comparison-table th, .comparison-table td { padding: 12px 14px; }
+
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .testimonials-grid .testimonial-card:last-child { grid-column: auto; max-width: none; }
+
+    .faq-grid { grid-template-columns: 1fr; }
+
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    .contact-info h2 { font-size: 28px; }
+
     .clinic-content h2 { font-size: 26px; }
-
-    .testimonial-inner {
-      grid-template-columns: 1fr;
-      text-align: center;
-    }
-    .testimonial-stars { justify-content: center; }
-    .testimonial-image img { max-width: 280px; }
-
     .cta h2 { font-size: 28px; }
   }
 </style>

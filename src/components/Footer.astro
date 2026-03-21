@@ -9,7 +9,12 @@ const year = new Date().getFullYear();
         <i class="fa-solid fa-tooth"></i>
         <span>SmartDental Cloud</span>
       </div>
-      <p>Software dental en la nube para consultorios modernos.</p>
+      <p>Software dental en la nube para consultorios modernos. Gestiona pacientes, citas, CFDI y más.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook" class="social-link"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#" aria-label="Instagram" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" aria-label="WhatsApp" class="social-link"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
     </div>
     <div class="footer-links">
       <div class="footer-col">
@@ -27,8 +32,9 @@ const year = new Date().getFullYear();
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="container">
+    <div class="container footer-bottom-inner">
       <p>&copy; {year} SmartDental Cloud. Todos los derechos reservados.</p>
+      <p class="footer-legal">Hecho en México 🇲🇽 · CFDI · SAT</p>
     </div>
   </div>
 </footer>
@@ -68,6 +74,29 @@ const year = new Date().getFullYear();
   .footer-brand p {
     font-size: 14px;
     line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 12px;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: #334155;
+    color: #94a3b8;
+    font-size: 16px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .social-link:hover {
+    background: var(--primary);
+    color: white;
   }
 
   .footer-links {
@@ -103,13 +132,26 @@ const year = new Date().getFullYear();
     padding: 20px 0;
   }
 
+  .footer-bottom-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
   .footer-bottom p {
     font-size: 13px;
     color: #64748b;
   }
 
+  .footer-legal {
+    font-size: 12px !important;
+  }
+
   @media (max-width: 768px) {
     .footer-inner { flex-direction: column; gap: 32px; }
     .footer-links { gap: 32px; }
+    .footer-bottom-inner { flex-direction: column; align-items: flex-start; gap: 8px; }
   }
 </style>

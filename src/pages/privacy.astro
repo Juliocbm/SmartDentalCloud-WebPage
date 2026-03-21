@@ -1,0 +1,193 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const year = new Date().getFullYear();
+---
+
+<Layout
+  title="Aviso de Privacidad"
+  description="Aviso de Privacidad de SmartDental Cloud. Conoce cómo protegemos y tratamos tus datos personales conforme a la LFPDPPP."
+>
+  <Header />
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="section-tag">Legal</span>
+      <h1>Aviso de Privacidad</h1>
+      <p>Última actualización: 1 de enero de {year}</p>
+    </div>
+  </section>
+
+  <section class="legal-content">
+    <div class="container">
+      <div class="legal-body">
+
+        <h2>1. Responsable del tratamiento de datos</h2>
+        <p>
+          SmartDental Cloud S.A.P.I. de C.V. (en adelante "SmartDental Cloud"), con domicilio en Ciudad de México,
+          México, es responsable del uso y protección de sus datos personales conforme a la
+          <strong>Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP)</strong>.
+        </p>
+        <p>
+          Para ejercer sus derechos ARCO o contactar a nuestro responsable de privacidad, escriba a:
+          <a href="mailto:privacidad@smartdentalcloud.com">privacidad@smartdentalcloud.com</a>
+        </p>
+
+        <h2>2. Datos personales que recabamos</h2>
+        <p>Podemos recabar las siguientes categorías de datos personales:</p>
+        <ul>
+          <li><strong>Datos de identificación:</strong> nombre completo, RFC, CURP.</li>
+          <li><strong>Datos de contacto:</strong> correo electrónico, número telefónico, dirección.</li>
+          <li><strong>Datos de la organización:</strong> nombre del consultorio, número de cédula profesional.</li>
+          <li><strong>Datos de facturación:</strong> RFC, régimen fiscal, dirección fiscal.</li>
+          <li><strong>Datos de uso:</strong> registros de acceso, preferencias y configuraciones del sistema.</li>
+          <li><strong>Datos de pacientes:</strong> información clínica ingresada por el titular de la cuenta en su calidad de responsable de dichos datos.</li>
+        </ul>
+
+        <h2>3. Finalidades del tratamiento</h2>
+        <p>Los datos personales serán utilizados para las siguientes finalidades <strong>primarias</strong>:</p>
+        <ul>
+          <li>Prestación del servicio de SmartDental Cloud y sus funcionalidades.</li>
+          <li>Creación y administración de su cuenta de usuario.</li>
+          <li>Emisión de facturas y timbrado de CFDI ante el SAT.</li>
+          <li>Soporte técnico y atención al cliente.</li>
+          <li>Cumplimiento de obligaciones legales y fiscales.</li>
+        </ul>
+        <p>Finalidades <strong>secundarias</strong> (puede negarse sin afectar la prestación del servicio):</p>
+        <ul>
+          <li>Envío de comunicaciones de marketing, novedades y actualizaciones del producto.</li>
+          <li>Realización de encuestas de satisfacción.</li>
+        </ul>
+
+        <h2>4. Transferencia de datos</h2>
+        <p>
+          SmartDental Cloud no transferirá sus datos personales a terceros sin su consentimiento, excepto en los
+          casos establecidos en el artículo 37 de la LFPDPPP, tales como transferencias exigidas por ley,
+          requerimientos de autoridades o transferencias necesarias para la prestación del servicio (por ejemplo,
+          el Servicio de Administración Tributaria para el timbrado de CFDI).
+        </p>
+
+        <h2>5. Derechos ARCO</h2>
+        <p>
+          Usted tiene derecho a <strong>Acceder, Rectificar, Cancelar u Oponerse (ARCO)</strong> al tratamiento
+          de sus datos personales. Para ejercer estos derechos, envíe un correo a
+          <a href="mailto:privacidad@smartdentalcloud.com">privacidad@smartdentalcloud.com</a> con:
+        </p>
+        <ul>
+          <li>Nombre completo y correo de la cuenta registrada.</li>
+          <li>Derecho que desea ejercer y descripción clara de la solicitud.</li>
+          <li>Identificación oficial vigente.</li>
+        </ul>
+        <p>Daremos respuesta en un plazo máximo de 20 días hábiles.</p>
+
+        <h2>6. Uso de cookies y tecnologías de rastreo</h2>
+        <p>
+          Nuestro sitio web y plataforma utilizan cookies y tecnologías similares para mejorar la experiencia
+          del usuario, analizar el tráfico y personalizar el contenido. Puede configurar su navegador para
+          rechazar cookies, aunque esto puede afectar algunas funcionalidades del servicio.
+        </p>
+
+        <h2>7. Seguridad de los datos</h2>
+        <p>
+          Implementamos medidas de seguridad técnicas, administrativas y físicas para proteger sus datos
+          personales, incluyendo encriptación SSL/TLS, respaldos periódicos en servidores ubicados en México,
+          y controles de acceso basados en roles.
+        </p>
+
+        <h2>8. Cambios al aviso de privacidad</h2>
+        <p>
+          Nos reservamos el derecho de modificar este aviso en cualquier momento. Los cambios serán notificados
+          mediante publicación en este sitio web o por correo electrónico al titular de la cuenta. El uso
+          continuado del servicio después de la notificación implica la aceptación de los cambios.
+        </p>
+
+        <h2>9. Contacto</h2>
+        <p>
+          Para cualquier consulta relacionada con este aviso de privacidad, puede contactarnos en:<br />
+          <a href="mailto:privacidad@smartdentalcloud.com">privacidad@smartdentalcloud.com</a>
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    padding: 64px 0 40px;
+    background: var(--surface-alt);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-hero h1 {
+    font-size: 36px;
+    font-weight: 800;
+    margin: 12px 0 8px;
+  }
+
+  .page-hero p {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .section-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .legal-content {
+    padding: 64px 0 100px;
+  }
+
+  .legal-body {
+    max-width: 760px;
+  }
+
+  .legal-body h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 40px 0 12px;
+    color: var(--text);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .legal-body p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .legal-body ul {
+    padding-left: 20px;
+    margin-bottom: 16px;
+  }
+
+  .legal-body ul li {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 6px;
+  }
+
+  .legal-body a {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+
+  .legal-body strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+</style>
