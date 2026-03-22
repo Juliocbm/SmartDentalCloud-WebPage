@@ -2082,8 +2082,9 @@ const faqs = [
     let mouse = { x: -1000, y: -1000 };
     let isMouseInHero = false;
     let heroOpacity = 1;
-    const PARTICLE_COUNT = 120;
-    const MOUSE_RADIUS = 120;
+    const PARTICLE_COUNT = 280;
+    const MOUSE_RADIUS = 150;
+    const CONNECTION_DISTANCE = 140;
     
     function resizeHeroCanvas() {
       const rect = heroSection.getBoundingClientRect();
@@ -2099,23 +2100,27 @@ const faqs = [
       reset() {
         this.x = Math.random() * heroCanvas.width;
         this.y = Math.random() * heroCanvas.height;
-        this.size = Math.random() * 2.5 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 0.12;
-        this.speedY = (Math.random() - 0.5) * 0.12;
-        this.baseOpacity = Math.random() * 0.5 + 0.2;
+        this.size = Math.random() * 2.5 + 1;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.speedY = (Math.random() - 0.5) * 0.4;
+        this.baseOpacity = Math.random() * 0.5 + 0.25;
+        this.wobbleSpeed = Math.random() * 0.02 + 0.01;
+        this.wobbleOffset = Math.random() * Math.PI * 2;
         
         const colors = [
           [37, 99, 235],
           [6, 182, 212],
-          [16, 185, 129]
+          [16, 185, 129],
+          [99, 102, 241]
         ];
         const color = colors[Math.floor(Math.random() * colors.length)];
         this.color = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${this.baseOpacity})`;
       }
       
       update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
+        const time = Date.now() * 0.001;
+        this.x += this.speedX + Math.sin(time * this.wobbleSpeed + this.wobbleOffset) * 0.5;
+        this.y += this.speedY + Math.cos(time * this.wobbleSpeed + this.wobbleOffset) * 0.5;
         
         if (isMouseInHero) {
           const rect = heroSection.getBoundingClientRect();
@@ -2129,15 +2134,15 @@ const faqs = [
           if (dist < MOUSE_RADIUS) {
             const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
             const angle = Math.atan2(dy, dx);
-            this.x += Math.cos(angle) * force * 2;
-            this.y += Math.sin(angle) * force * 2;
+            this.x += Math.cos(angle) * force * 4;
+            this.y += Math.sin(angle) * force * 4;
           }
         }
         
-        if (this.x < -20) this.x = heroCanvas.width + 20;
-        if (this.x > heroCanvas.width + 20) this.x = -20;
-        if (this.y < -20) this.y = heroCanvas.height + 20;
-        if (this.y > heroCanvas.height + 20) this.y = -20;
+        if (this.x < -30) this.x = heroCanvas.width + 30;
+        if (this.x > heroCanvas.width + 30) this.x = -30;
+        if (this.y < -30) this.y = heroCanvas.height + 30;
+        if (this.y > heroCanvas.height + 30) this.y = -30;
       }
       
       draw() {
@@ -2147,12 +2152,10 @@ const faqs = [
         ctx.fillStyle = this.color.replace(/[\d.]+\)$/, `${opacity})`);
         ctx.fill();
         
-        if (this.size > 1.5) {
-          ctx.shadowBlur = 8;
-          ctx.shadowColor = this.color;
-          ctx.fill();
-          ctx.shadowBlur = 0;
-        }
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = this.color;
+        ctx.fill();
+        ctx.shadowBlur = 0;
       }
     }
     
@@ -2170,13 +2173,19 @@ const faqs = [
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           
-          if (dist < 80) {
-            const opacity = (1 - dist / 80) * 0.15 * heroOpacity;
+          if (dist < CONNECTION_DISTANCE) {
+            const opacity = (1 - dist / CONNECTION_DISTANCE) * 0.4 * heroOpacity;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(37, 99, 235, ${opacity})`;
-            ctx.lineWidth = 0.5;
+            
+            const gradient = ctx.createLinearGradient(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
+            gradient.addColorStop(0, `rgba(37, 99, 235, ${opacity})`);
+            gradient.addColorStop(0.5, `rgba(6, 182, 212, ${opacity})`);
+            gradient.addColorStop(1, `rgba(16, 185, 129, ${opacity})`);
+            
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 1;
             ctx.stroke();
           }
         }
@@ -2190,7 +2199,8 @@ const faqs = [
         const heroMouseY = mouse.y - rect.top;
         
         const gradient = ctx.createRadialGradient(heroMouseX, heroMouseY, 0, heroMouseX, heroMouseY, MOUSE_RADIUS);
-        gradient.addColorStop(0, `rgba(37, 99, 235, ${0.08 * heroOpacity})`);
+        gradient.addColorStop(0, `rgba(37, 99, 235, ${0.12 * heroOpacity})`);
+        gradient.addColorStop(0.5, `rgba(6, 182, 212, ${0.06 * heroOpacity})`);
         gradient.addColorStop(1, 'rgba(37, 99, 235, 0)');
         ctx.fillStyle = gradient;
         ctx.beginPath();
